@@ -1,0 +1,120 @@
+/* Custome properties */
+:root {
+    --ff-primary: 'Poppins';
+    --ff-secondary:sans-serif;
+
+    --fw-reg: 300;
+    --fw-bold: 900;
+
+    --clr-bg: #ffff;
+    --clr-text: #151515;
+    --clr-accent: hsl(192, 100%, 73%);
+    --clr-gradual: linear-gradient(to right,hsl(253, 100%, 54%), hsl(192, 100%, 73%));
+    --clr-dark: rgb(66, 66, 66);
+    --clr-orange: rgb(255, 152, 74);
+
+    --fs-h1: 3rem;
+    --fs-h2: 2.25rem;
+    --fs-h3: 2rem;
+    --fs-body: 1rem;
+
+    --imgs: 250px;
+
+    --bs: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+/* Button */
+.button {
+    display: inline-block;
+    color: #fff;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: inherit;
+    font-weight: bold;
+}
+
+.button:hover {
+    transition: 0.5s;
+}
+
+#orange {
+    background-color: var(--clr-orange);
+}
+
+/* Navbar */
+.NavbarItems {
+    background: var(--clr-gradual);
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+}
+
+.navbar-logo {
+    color: #fff;
+    justify-self: start;
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.fa-react {
+    margin-left: 0.5rem;
+    font-size: 1.6rem;
+}
+
+/* Home View */
+#home-window {
+    background-color: rgb(196, 249, 232);
+    display: flex;
+    flex-direction: column;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+/* Weekly talbe */
+#weekly-table {
+    background-color: white;
+    min-width: 90%;
+}
+
+/* Weekly Progress */
+#weekly-progress {
+    background-color: black;
+    min-width: 90%;
+}
+
+
+
+@media (min-width: 1000px) {
+    #weekly-table {
+
+    }
+}
+
+@media (max-width: 900px) {
+    #weekly-table {
+
+    }
+}
+  
+@media (max-width: 750px) {
+    #weekly-table {
+
+    }
+}
+
+@media (max-width: 375px) {
+    #weekly-table {
+
+    }
+}
+
+@media (max-width: 390px) {
+    #weekly-table {
+
+    }
+}
