@@ -1,71 +1,44 @@
 import * as React from 'react';
-import { useTheme } from '@mui/material/styles'
-import { LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
-
-function createData(time, amount) {
-  return { time, amount };
-}
+import { useTheme } from '@mui/material/styles';
+import { ResponsiveContainer, AreaChart, XAxis, YAxis, Area, Tooltip, CartesianGrid } from 'recharts';
 
 const data = [
-  createData('00:00', 0),
-  createData('03:00', 300),
-  createData('06:00', 600),
-  createData('09:00', 800),
-  createData('12:00', 1500),
-  createData('15:00', 2000),
-  createData('18:00', 2400),
-  createData('21:00', 2400),
-  createData('24:00', undefined),
+  {date: '00:00', value: 0},
+  {date: '03:00', value: 300},
+  {date: '06:00', value: 600},
+  {date: '09:00', value: 800},
+  {date: '12:00', value: 1500},
+  {date: '15:00', value: 2000},
+  {date: '18:00', value: 2400},
+  {date: '21:00', value: 2400},
 ];
 
-export default function ProgressGraph() {
+export default function Chart() {
   const theme = useTheme();
 
   return (
-      <div id='weekly-progress'>
-        <React.Fragment>
-        <h1>Weekly Progress</h1>
-        <ResponsiveContainer>
-            <LineChart
-            data={data}
-            margin={{
-                top: 16,
-                right: 16,
-                bottom: 0,
-                left: 24,
-            }}
-            >
-            <XAxis
-                dataKey="time"
-                stroke={theme.palette.text.secondary}
-                style={theme.typography.body2}
-            />
-            <YAxis
-                stroke={theme.palette.text.secondary}
-                style={theme.typography.body2}
-            >
-                <Label
-                angle={270}
-                position="left"
-                style={{
-                    textAnchor: 'middle',
-                    fill: theme.palette.text.primary,
-                    ...theme.typography.body1,
-                }}
-                >
-                Sales ($)
-                </Label>
-            </YAxis>
-            <Line
-                isAnimationActive={false}
-                type="monotone"
-                dataKey="amount"
-                stroke={theme.palette.primary.main}
-                dot={false}
-            />
-            </LineChart>
-        </ResponsiveContainer>
-        </React.Fragment>
-    </div>
+    <React.Fragment>
+      <h1>Weekly Chart</h1>
+      <ResponsiveContainer width="100%" height={400}>
+        <AreaChart data={data}>
+          <defs>
+            <linearGradient id='color' x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#2451B7" stopOpacity={0.4}></stop>
+              <stop offset="75%" stopColor="#2451B7" stopOpacity={0.05}></stop>
+            </linearGradient>
+          </defs>
+          <Area dataKey="value" stroke='#2451B7' fill='url(#color)'/>
+          <XAxis dataKey="date" />
+          <YAxis 
+            dataKey="value" 
+            axisLine={false} 
+            tickLine={false} 
+            tickCount={8}
+          />
+          <Tooltip></Tooltip>
+          <CartesianGrid opacity={0.5} vertical={false} />
+        </AreaChart>
+      </ResponsiveContainer>
+    </React.Fragment>
   );
 }
