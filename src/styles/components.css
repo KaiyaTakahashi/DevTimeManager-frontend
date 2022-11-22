@@ -75,6 +75,16 @@
     padding-right: 50px;
 }
 
+/* Timer */
+#timer-flex {
+    display: flex;
+    flex-direction: row;
+    margin: 30px 0px 10px 0px;
+    background-color: white;
+    justify-content: center;
+    column-gap: 10%;
+}
+
 /* Weekly talbe */
 #weekly-table {
     background-color: white;
