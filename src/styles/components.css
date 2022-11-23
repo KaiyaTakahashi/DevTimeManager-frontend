@@ -102,6 +102,10 @@
     #weekly-table {
 
     }
+
+    #timer-flex {
+
+    }
 }
 
 @media (max-width: 900px) {
@@ -119,6 +123,11 @@
 @media (max-width: 375px) {
     #weekly-table {
 
+    }
+
+    #timer-flex {
+        align-items: center;
+        flex-direction: column;
     }
 }
 
