@@ -4,6 +4,9 @@ import { useStopwatch } from 'react-timer-hook';
 import { useForm } from 'react-hook-form';
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button';
+import Axios from 'axios';
+
+Axios.defaults.withCredentials = true;
 
 function Timer() {
     const {
@@ -19,9 +22,14 @@ function Timer() {
     const [taskName, setTaskName] = useState("");
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const onSubmit = (data) => {
-        console.log(data)
-        console.log({hours: hours, minutes: minutes, seconds: seconds})
-        console.log(taskName);
+        Axios.post("http://localhost:3001/tasks/insert", {
+            taskName: taskName,
+            isFinished: data.isFinished,
+            date: new Date(),
+            time: hours + ":" + minutes + ":" + seconds,
+        }).then((response) => {
+            console.log(response);
+        })
     }
     return (
         <form id="timer-flex" onSubmit={handleSubmit(onSubmit)}>

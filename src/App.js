@@ -4,6 +4,7 @@ import Login from './routes/Login';
 
 
 function App() {
+  console.log(new Date())
   return (
     <div>
       <Router>

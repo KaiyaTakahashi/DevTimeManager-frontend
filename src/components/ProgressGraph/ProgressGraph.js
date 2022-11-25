@@ -1,21 +1,31 @@
 import * as React from 'react';
 import { useTheme } from '@mui/material/styles';
 import { ResponsiveContainer, AreaChart, XAxis, YAxis, Area, Tooltip, CartesianGrid } from 'recharts';
+import { useState, useEffect } from 'react';
+import Axios from 'axios';
+Axios.defaults.withCredentials = true;
 
-const data = [
-  {date: '00:00', value: 0},
-  {date: '03:00', value: 300},
-  {date: '06:00', value: 600},
-  {date: '09:00', value: 800},
-  {date: '12:00', value: 1500},
-  {date: '15:00', value: 2000},
-  {date: '18:00', value: 2400},
-  {date: '21:00', value: 2400},
+const dataa = [
+  {date: 'Sun', value: 0},
+  {date: 'Mon', value: 300},
+  {date: 'Tue', value: 600},
+  {date: 'Wed', value: 800},
+  {date: 'Thu', value: 1500},
+  {date: 'Fri', value: 2000},
+  {date: 'Sat', value: 2400},
 ];
 
 export default function Chart() {
   const theme = useTheme();
-
+  const [data, setData] = useState()
+  const fetchData = async () => {
+    Axios.get("http://localhost:3001/tasks/get").then((response) => {
+      setData(response["data"]);
+    })
+  }
+  useEffect(() => {
+    fetchData()
+  }, [])
   return (
     <React.Fragment>
       <h1>Weekly Chart</h1>

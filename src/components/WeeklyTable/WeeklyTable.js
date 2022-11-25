@@ -5,54 +5,25 @@ import { TableBody } from '@mui/material';
 import { TableCell } from '@mui/material';
 import { TableHead } from '@mui/material';
 import { TableRow } from '@mui/material';
+import  Axios  from 'axios';
+import { useEffect, useState } from 'react';
 
-function createData(id, name, time, date, isFinished) {
-    return { id, name, time, date, isFinished};
-}
+Axios.defaults.withCredentials = true;
 
 function preventDefault(event) {
     event.preventDefault();
 }
 
-const rows = [
-    createData(
-      0,
-      'Google Authentication',
-      180,
-      '16 Mar, 2019',
-      true,
-    ),
-    createData(
-      1,
-      'JWT token',
-      240,
-      '16 Mar, 2019',
-      false,
-    ),
-    createData(
-        2, 
-        'Login View', 
-        360, 
-        '16 Mar, 2019', 
-        false,
-    ),
-    createData(
-      3,
-      'Table view',
-      120,
-      '16 Mar, 2019',
-      true,
-    ),
-    createData(
-      4,
-      'Leetcode',
-      60,
-      '15 Mar, 2019',
-      true
-    ),
-  ];
-
 export default function WeeklyTable() {
+    const [rows, setRows] = useState([]);
+    useEffect(() => {
+        fetchData()
+    }, [])
+    const fetchData = async () => {
+        Axios.get("http://localhost:3001/tasks/get").then((response) => {
+            setRows(response["data"]);
+        })
+    }
     return (
         <div id='weekly-table'>
         <React.Fragment>
@@ -69,10 +40,10 @@ export default function WeeklyTable() {
                 <TableBody>
                     {rows.map((row) => (
                         <TableRow>
-                            <TableCell>{row.name}</TableCell>
+                            <TableCell>{row["task_name"]}</TableCell>
                             <TableCell>{row.time}</TableCell>
                             <TableCell>{row.date}</TableCell>
-                            <TableCell>{row.isFinished}</TableCell>
+                            <TableCell>{row["is_finished"]}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

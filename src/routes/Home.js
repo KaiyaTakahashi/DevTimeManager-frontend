@@ -8,6 +8,7 @@ import Timer from "../components/Timer/Timer";
 const Home = () => {
   return (
     <div id="home-window">
+      <h1>Timer</h1>
       <Timer></Timer>
       <ProgressGraph></ProgressGraph>
       <WeeklyTable></WeeklyTable>
