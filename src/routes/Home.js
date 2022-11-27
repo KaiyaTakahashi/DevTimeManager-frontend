@@ -4,6 +4,8 @@ import "/Users/kaiyatakahashi/Desktop/DevTimeManager/client/src/styles/component
 import WeeklyTable from "../components/WeeklyTable/WeeklyTable";
 import ProgressGraph from "../components/ProgressGraph/ProgressGraph"
 import Timer from "../components/Timer/Timer";
+import Login from "../components/GoogleButton/Login";
+import Logout from "../components/GoogleButton/Logout";
 
 const Home = () => {
   return (
@@ -12,6 +14,8 @@ const Home = () => {
       <Timer></Timer>
       <ProgressGraph></ProgressGraph>
       <WeeklyTable></WeeklyTable>
+      <Login></Login>
+      <Logout></Logout>
     </div>
   );
 };
