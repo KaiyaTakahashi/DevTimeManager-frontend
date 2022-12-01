@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { GoogleLogout } from "react-google-login";
 import { gapi } from "gapi-script";
 
-const clientId = "252537839800-gisn0d87ekkklurcq00ucglil44tmmpm.apps.googleusercontent.com";
+const clientId = "985770492377-a2nlp1h94mi7s7v861khiturmfqs9gsm.apps.googleusercontent.com";
 
 var Logout = () => {
     return (

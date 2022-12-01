@@ -4,24 +4,21 @@ import { gapi } from 'gapi-script';
 import Axios from 'axios';
 
 Axios.defaults.withCredentials = true
-const clientId = "252537839800-gisn0d87ekkklurcq00ucglil44tmmpm.apps.googleusercontent.com";
+const clientId = "985770492377-a2nlp1h94mi7s7v861khiturmfqs9gsm.apps.googleusercontent.com";
 
 var Login = () => {
-    useEffect(() => {
-        function start() {
-            gapi.client.init({
-                clientId: clientId,
-                scope: "",
-            })
-        };
-        gapi.load('client:auth2', start);
-    })
+    // useEffect(() => {
+    //     function start() {
+    //         gapi.client.init({
+    //             clientId: clientId,
+    //             scope: "",
+    //         })
+    //     };
+    //     gapi.load('client:auth2', start);
+    // })
     const onSuccess = (res) => {
         console.log("Login successfull",res);
-        const code = res;
-        Axios.post('http://localhost:3001/api/create_tokens', {
-            code: code,
-        }).then((response) => {
+        Axios.post('http://localhost:3001/api/create_tokens', res).then((response) => {
             console.log("This is response", response.data)
         }).catch((err) => { console.log(err.message)})
     }
