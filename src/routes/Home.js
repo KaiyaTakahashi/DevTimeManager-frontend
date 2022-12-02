@@ -10,12 +10,19 @@ import Logout from "../components/GoogleButton/Logout";
 const Home = () => {
   return (
     <div id="home-window">
-      <h1>Timer</h1>
-      <Timer></Timer>
+      <header id="home-header">
+        <h1>DEV TIME MANAGER</h1>
+        <div id="google-buttons">
+          <Login></Login>
+          <Logout></Logout>
+        </div>
+      </header>
+      <div>
+        <h1>Timer</h1>
+        <Timer></Timer>
+      </div>
       <ProgressGraph></ProgressGraph>
       <WeeklyTable></WeeklyTable>
-      <Login></Login>
-      <Logout></Logout>
     </div>
   );
 };

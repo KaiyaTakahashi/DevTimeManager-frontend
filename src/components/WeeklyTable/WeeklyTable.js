@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Link from '@mui/material/Link';
 import Table from '@mui/material/Table';
-import { TableBody } from '@mui/material';
+import { Paper, TableBody } from '@mui/material';
 import { TableCell } from '@mui/material';
 import { TableHead } from '@mui/material';
 import { TableRow } from '@mui/material';
@@ -28,6 +28,7 @@ export default function WeeklyTable() {
         <div id='weekly-table'>
         <React.Fragment>
             <h1>Weekly Table</h1>
+            <Paper className='container'>
             <Table size='small'>
                 <TableHead>
                     <TableRow>
@@ -48,6 +49,7 @@ export default function WeeklyTable() {
                     ))}
                 </TableBody>
             </Table>
+            </Paper>
             <Link color={"primary"} href="#" onClick={preventDefault} sx={{ mt: 3}}>
                 See more tasks
             </Link>

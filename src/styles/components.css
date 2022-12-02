@@ -75,14 +75,55 @@
     padding-right: 50px;
 }
 
+/* Header */
+#home-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+#google-buttons {
+    display: flex;
+    flex-direction: row;
+    column-gap: 5px;
+    position: absolute;
+    right: 10px;
+}
+
 /* Timer */
 #timer-flex {
     display: flex;
     flex-direction: row;
-    margin: 30px 0px 10px 0px;
+    margin: 10px 0px 10px 0px;
+    padding: 0px 10px 0px 10px;
     background-color: white;
     justify-content: center;
+    align-items: center;
     column-gap: 10%;
+}
+
+#timer-count-box {
+    display: flex;
+    flex-direction: column;
+}
+
+#timer-count {
+    font-size: 30px;
+}
+
+#timer-count-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    column-gap: 10px;
+}
+
+#timer-status-box {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    align-items: center;
 }
 
 /* Weekly talbe */
@@ -90,6 +131,15 @@
     background-color: white;
     min-width: 90%;
 }
+
+.container {
+    overflow-x: auto;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 50px;
+    padding: 10px;
+    margin: 10px;
+  }
 
 /* Weekly Progress */
 #weekly-progress {
@@ -120,19 +170,39 @@
     }
 }
 
-@media (max-width: 375px) {
-    #weekly-table {
-
+@media (max-width: 390px) {
+    /* Header */
+    #home-header {
     }
 
-    #timer-flex {
-        align-items: center;
-        flex-direction: column;
+    #google-buttons {
+    }
+    
+    #weekly-table {
+
     }
 }
 
-@media (max-width: 390px) {
-    #weekly-table {
+@media (max-width: 375px) {
+    /* Header */
+    #home-header {
+        font-size: 13px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: unset;
+    }
 
+    #google-buttons {
+        display: flex;
+        flex-direction: row;
+        column-gap: 10px;
+        position: unset;
+        right: unset;
+    }
+    
+    #timer-flex {
+        align-items: center;
+        flex-direction: column;
     }
 }

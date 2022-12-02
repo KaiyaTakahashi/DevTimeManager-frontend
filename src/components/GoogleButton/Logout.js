@@ -9,7 +9,10 @@ var Logout = () => {
         <GoogleLogout
             clientId={clientId}
             buttonText={"Logout"}
-            onLogoutSuccess={() => {console.log("Log out successfull")}}
+            onLogoutSuccess={() => {
+                localStorage.setItem("isLoggedin", false);
+                console.log("Log out successfull")
+            }}
         />
     )
 }

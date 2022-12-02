@@ -18,9 +18,13 @@ var Login = () => {
     // })
     const onSuccess = (res) => {
         console.log("Login successfull",res);
+        localStorage.setItem("isLoggedin", true);
         Axios.post('http://localhost:3001/api/create_tokens', res).then((response) => {
             console.log("This is response", response.data)
-        }).catch((err) => { console.log(err.message)})
+        }).catch((err) => {
+            localStorage.setItem("isLoggedin", false);
+            console.log(err.message);
+        })
     }
     return (
         <GoogleLogin

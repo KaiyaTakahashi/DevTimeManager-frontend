@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import Axios from 'axios';
 
 Axios.defaults.withCredentials = true;
-Date.prototype.createEndDate = function(hours, minutes, days) {
+Date.prototype.createStartDate = function(hours, minutes, days) {
     this.setTime(this.getTime() - (hours*60*60*1000) - (minutes*60*1000) - (days*60*60*60*1000));
     return this
 }
@@ -25,25 +25,29 @@ function Timer() {
     } = useStopwatch({ autoStart: false });
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const onSubmit = (data) => {
-        // Check if the user is logged in Google
-        // Yes -> Show confirm popup
-        if (window.confirm("Do you want to push this event to google calendar?")) {
-            // Create an event
-            const today = new Date();
-            console.log("Event was created");
-            console.log(today.createEndDate(hours, minutes, days));
-            Axios.post('http://localhost:3001/create_event', {
-                summary: data.task,
-                description: "",
-                location: "",
-                startDateTime: today.createEndDate(hours, minutes, days),
-                endDateTime: today,
-            }).then((response) => {
-                console.log(response.data);
-            })
+        if (localStorage.getItem("isLoggedin") == true) {
+            if (window.confirm("Do you want to push this event to google calendar?")) {
+                // Create an event
+                const today = new Date();
+                console.log("Event was created");
+                console.log(today.createStartDate(hours, minutes, days));
+                Axios.post('http://localhost:3001/create_event', {
+                    summary: data.task,
+                    description: "",
+                    location: "",
+                    startDateTime: today.createStartDate(hours, minutes, days),
+                    endDateTime: today,
+                }).then((response) => {
+                    console.log(response.data);
+                })
+            } else {
+                console.log("Event wasn't created");
+            }
         } else {
-            console.log("Event wasn't created");
+            console.log("User is not logged in, but created task in a database");
+            window.alert("Task was saved")
         }
+        /* Insert task into database */
         // Axios.post("http://localhost:3001/tasks/insert", {
         //     taskName: taskName,
         //     isFinished: data.isFinished,
@@ -65,38 +69,44 @@ function Timer() {
                     defaultValue="" {...register("task")}
                 />
             </div>
-            <div>
-                <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
-                <p>{isRunning ? 'Running' : 'Not Running'}</p>
-                {
-                    isRunning ? <Button variant="contained" onClick={pause}>Pause</Button> : <Button variant="contained" onClick={start}>Start</Button>
-                }
-                <Button variant="contained" onClick={reset} color="secondary">Reset</Button>
-            </div>
-            <div>
-                <div className="radio">
-                <label>
-                    <input 
-                        type="radio"
-                        {...register("isFinished", {required: "Status is required"})}
-                        value="progress"
-                    />
-                    In Progress
-                </label>
+            <div id="timer-count-box">
+                <div id="timer-count">
+                    <span>{hours}</span>hrs <span>{minutes}</span>mins <span>{seconds}</span>secs
                 </div>
-                <div className="radio">
-                <label>
-                    <input
-                        type="radio"
-                        {...register("isFinished", {required: "Status is required"})}
-                        value="finished"
-                        defaultChecked={true}
-                    />
-                    Finished
-                </label>
+                {/* <p>{isRunning ? 'Running' : 'Not Running'}</p> */}
+                <div id="timer-count-buttons">
+                    {
+                        isRunning ? <Button variant="contained" onClick={pause}>Pause</Button> : <Button variant="contained" onClick={start}>Start</Button>
+                    }
+                    <Button variant="contained" onClick={reset} color="secondary">Reset</Button>
+                </div>
+            </div>
+            <div id="timer-status-box">
+                <div id="timer-status-radios">
+                    <div className="radio">
+                        <label>
+                            <input 
+                                type="radio"
+                                {...register("isFinished", {required: "Status is required"})}
+                                value="progress"
+                            />
+                            In Progress
+                        </label>
+                    </div>
+                    <div className="radio">
+                        <label>
+                            <input
+                                type="radio"
+                                {...register("isFinished", {required: "Status is required"})}
+                                value="finished"
+                                defaultChecked={true}
+                            />
+                            Finished
+                        </label>
+                    </div>
                 </div>
                 <Button type="submit" variant="contained">Submit</Button>
-                <pre>{JSON.stringify(watch(), null, 2)}</pre>
+                {/* <pre>{JSON.stringify(watch(), null, 2)}</pre> */}
             </div>
         </form>
       );
