@@ -48,14 +48,21 @@ function Timer() {
             window.alert("Task was saved")
         }
         /* Insert task into database */
-        // Axios.post("http://localhost:3001/tasks/insert", {
-        //     taskName: taskName,
-        //     isFinished: data.isFinished,
-        //     date: new Date(),
-        //     time: hours + ":" + minutes + ":" + seconds,
-        // }).then((response) => {
-        //     console.log(response);
-        // })
+        Axios.post("http://localhost:3001/tasks/insert", {
+            taskName: data.taskName,
+            isFinished: data.isFinished,
+            date: new Date(),
+            time: hours + ":" + minutes + ":" + seconds,
+        }).then((response) => {
+            console.log(response);
+        })
+        /* Insert task into weekly_tasks */
+        Axios.post("http://localhost:3001/weekly_tasks/insert", {
+            date: new Date().toISOString().split('T')[0],
+            value: hours + (minutes / 60),
+        }).then((response) => {
+            console.log(response);
+        })
     }
     return (
         <form id="timer-flex" onSubmit={handleSubmit(onSubmit)}>

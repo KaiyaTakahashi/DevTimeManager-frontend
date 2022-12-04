@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import Axios from 'axios';
 Axios.defaults.withCredentials = true;
 
-const dataa = [
+const data = [
   {date: 'Sun', value: 0},
   {date: 'Mon', value: 300},
   {date: 'Tue', value: 600},
@@ -19,8 +19,17 @@ export default function Chart() {
   const theme = useTheme();
   const [data, setData] = useState()
   const fetchData = async () => {
-    Axios.get("http://localhost:3001/tasks/get").then((response) => {
-      setData(response["data"]);
+    Axios.get("http://localhost:3001/weekly_tasks/get").then((response) => {
+      // var newData = [];
+      // var temp = [];
+      // console.log(response)
+      // for (let i = 0; i < response["data"]; i++) {
+      //   temp.push({ date: response.data[i].date })
+      //   newData.push(response["data"][i])
+      // }
+      // console.log(newData)
+      // setData(response["data"]);
+      setData(response.data)
     })
   }
   useEffect(() => {
