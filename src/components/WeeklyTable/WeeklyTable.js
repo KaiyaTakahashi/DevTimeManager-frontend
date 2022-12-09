@@ -27,7 +27,6 @@ export default function WeeklyTable() {
     return (
         <div id='weekly-table'>
         <React.Fragment>
-            <h1>Weekly Table</h1>
             <Paper className='container'>
             <Table size='small'>
                 <TableHead>
@@ -43,7 +42,7 @@ export default function WeeklyTable() {
                         <TableRow>
                             <TableCell>{row["task_name"]}</TableCell>
                             <TableCell>{row.time}</TableCell>
-                            <TableCell>{row.date}</TableCell>
+                            <TableCell>{row.date.substring(5, 10)}</TableCell>
                             <TableCell>{row["is_finished"]}</TableCell>
                         </TableRow>
                     ))}

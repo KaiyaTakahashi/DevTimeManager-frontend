@@ -11,7 +11,7 @@ const Home = () => {
   return (
     <div id="home-window">
       <header id="home-header">
-        <h1>DEV TIME MANAGER</h1>
+        <h1 className="app-title">DEV TIME MANAGER</h1>
         <div id="google-buttons">
           <Login></Login>
           <Logout></Logout>
@@ -21,8 +21,9 @@ const Home = () => {
         <h1>Timer</h1>
         <Timer></Timer>
       </div>
-      <ProgressGraph></ProgressGraph>
+      <h1>Weekly Table</h1>
       <WeeklyTable></WeeklyTable>
+      <ProgressGraph></ProgressGraph>
     </div>
   );
 };

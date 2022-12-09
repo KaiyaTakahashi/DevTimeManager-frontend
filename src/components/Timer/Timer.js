@@ -49,18 +49,20 @@ function Timer() {
         }
         /* Insert task into database */
         Axios.post("http://localhost:3001/tasks/insert", {
-            taskName: data.taskName,
+            taskName: data.task,
             isFinished: data.isFinished,
             date: new Date(),
             time: hours + ":" + minutes + ":" + seconds,
         }).then((response) => {
+            console.log("Task is stored in tasks")
             console.log(response);
         })
         /* Insert task into weekly_tasks */
         Axios.post("http://localhost:3001/weekly_tasks/insert", {
             date: new Date().toISOString().split('T')[0],
-            value: hours + (minutes / 60),
+            value: hours + Math.floor(minutes / 60),
         }).then((response) => {
+            console.log("Task is stored in weekly_tasks")
             console.log(response);
         })
     }
