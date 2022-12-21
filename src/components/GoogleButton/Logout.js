@@ -10,8 +10,8 @@ var Logout = () => {
             clientId={clientId}
             buttonText={"Logout"}
             onLogoutSuccess={() => {
-                localStorage.setItem("isLoggedin", false);
                 console.log("Log out successfull")
+                localStorage.setItem("isLoggedin", false);
             }}
         />
     )

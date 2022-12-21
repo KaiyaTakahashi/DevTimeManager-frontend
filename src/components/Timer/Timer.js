@@ -25,7 +25,8 @@ function Timer() {
     } = useStopwatch({ autoStart: false });
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const onSubmit = (data) => {
-        if (localStorage.getItem("isLoggedin") == true) {
+        console.log("isLoggedin: ",localStorage.getItem("isLoggedin"))
+        if (localStorage.getItem("isLoggedin")) {
             if (window.confirm("Do you want to push this event to google calendar?")) {
                 // Create an event
                 const today = new Date();
@@ -48,23 +49,23 @@ function Timer() {
             window.alert("Task was saved")
         }
         /* Insert task into database */
-        Axios.post("http://localhost:3001/tasks/insert", {
-            taskName: data.task,
-            isFinished: data.isFinished,
-            date: new Date(),
-            time: hours + ":" + minutes + ":" + seconds,
-        }).then((response) => {
-            console.log("Task is stored in tasks")
-            console.log(response);
-        })
+        // Axios.post("http://localhost:3001/tasks/insert", {
+        //     taskName: data.task,
+        //     isFinished: data.isFinished,
+        //     date: new Date(),
+        //     time: hours + ":" + minutes + ":" + seconds,
+        // }).then((response) => {
+        //     console.log("Task is stored in tasks")
+        //     console.log(response);
+        // })
         /* Insert task into weekly_tasks */
-        Axios.post("http://localhost:3001/weekly_tasks/insert", {
-            date: new Date().toISOString().split('T')[0],
-            value: hours + Math.floor(minutes / 60),
-        }).then((response) => {
-            console.log("Task is stored in weekly_tasks")
-            console.log(response);
-        })
+        // Axios.post("http://localhost:3001/weekly_tasks/insert", {
+        //     date: new Date().toISOString().split('T')[0],
+        //     value: hours + Math.floor(minutes / 60),
+        // }).then((response) => {
+        //     console.log("Task is stored in weekly_tasks")
+        //     console.log(response);
+        // })
     }
     return (
         <form id="timer-flex" onSubmit={handleSubmit(onSubmit)}>

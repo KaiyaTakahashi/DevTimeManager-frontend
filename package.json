@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.10.14",
     "@syncfusion/ej2-react-charts": "^20.3.57",
     "@testing-library/jest-dom": "^5.16.5",
@@ -14,6 +15,7 @@
     "gapi-script": "^1.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-final-form": "^6.5.9",
     "react-google-login": "^5.2.2",
     "react-hook-form": "^7.39.4",
     "react-router-dom": "^6.4.3",
