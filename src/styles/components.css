@@ -155,6 +155,10 @@
     margin: 10px;
   }
 
+.icon-box {
+    max-width: 47px;
+}
+
 /* Weekly Progress */
 #weekly-progress {
     min-width: 90%;
