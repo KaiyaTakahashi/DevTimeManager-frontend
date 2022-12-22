@@ -69,7 +69,7 @@ function Timer() {
     }
     return (
         <form id="timer-flex" onSubmit={handleSubmit(onSubmit)}>
-            <div>
+            <div className="timer-item">
                 <br></br>
                 <span>Task: </span>
                 <TextField
@@ -79,7 +79,7 @@ function Timer() {
                     defaultValue="" {...register("task")}
                 />
             </div>
-            <div id="timer-count-box">
+            <div className="timer-item" id="timer-count-box">
                 <div id="timer-count">
                     <span>{hours}</span>hrs <span>{minutes}</span>mins <span>{seconds}</span>secs
                 </div>
@@ -91,7 +91,7 @@ function Timer() {
                     <Button variant="contained" onClick={reset} color="secondary">Reset</Button>
                 </div>
             </div>
-            <div id="timer-status-box">
+            <div className="timer-item" id="timer-status-box">
                 <div id="timer-status-radios">
                     <div className="radio">
                         <label>

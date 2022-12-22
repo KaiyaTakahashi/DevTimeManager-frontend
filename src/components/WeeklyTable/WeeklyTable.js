@@ -37,13 +37,19 @@ export default function WeeklyTable() {
     }
 
     const handleEdit = (event, row) => {
-        console.log("edit1", "disable:", disable, "c:", row);
         setDisable({
             ...disable,
             [row.id]: row.value
         })
     }
-    
+    const handleDelete = (event, row) => {
+        console.log("Delete ", row.task_name)
+    }
+
+    const handleSave = (event, row) => {
+        console.log("Save ", row.task_name)
+    }
+
     return (
         <div id='weekly-table'>
         <faCoffee></faCoffee>
@@ -88,10 +94,16 @@ export default function WeeklyTable() {
                                         }}
                                         >
                                         </CancelIcon>
-                                        <DeleteIcon>
-                                        </DeleteIcon>
-                                        <SaveAltIcon>
-                                        </SaveAltIcon>
+                                        <DeleteIcon
+                                            onClick={(event) => {
+                                                handleDelete(event, row)
+                                            }}
+                                        />
+                                        <SaveAltIcon
+                                            onClick={(event) => {
+                                                handleSave(event, row)
+                                            }}
+                                        />
                                     </div>
                                 }
                             </TableCell>
