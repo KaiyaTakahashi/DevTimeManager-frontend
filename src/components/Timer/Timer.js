@@ -25,6 +25,7 @@ function Timer() {
     } = useStopwatch({ autoStart: false });
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const onSubmit = (data) => {
+        console.log(data.isFinished)
         console.log("isLoggedin: ",localStorage.getItem("isLoggedin"))
         if (localStorage.getItem("isLoggedin")) {
             if (window.confirm("Do you want to push this event to google calendar?")) {

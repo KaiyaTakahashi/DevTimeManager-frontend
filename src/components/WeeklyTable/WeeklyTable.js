@@ -37,6 +37,7 @@ export default function WeeklyTable() {
     }
 
     const handleEdit = (event, row) => {
+        console.log(rows)
         setDisable({
             ...disable,
             [row.id]: row.value
@@ -50,6 +51,20 @@ export default function WeeklyTable() {
         console.log("Save ", row.task_name)
     }
 
+    const handleIsFinished = (event, row) => {
+        const firstIndex = rows[0].task_id;
+        const index = row.id - firstIndex;
+        var newRows = rows
+        if (newRows[index].is_finished === "progress") {
+            newRows[index].is_finished = "finished"
+        } else {
+            newRows[index].is_finished = "progress"
+        }
+        console.log("newRows: ", newRows)
+        console.log("changedRowTask: ", index)
+        setRows(newRows)
+    }
+
     return (
         <div id='weekly-table'>
         <faCoffee></faCoffee>
@@ -61,7 +76,7 @@ export default function WeeklyTable() {
                         <TableCell>Task Name</TableCell>
                         <TableCell>Time</TableCell>
                         <TableCell>Date</TableCell>
-                        <TableCell>Status</TableCell>
+                        <TableCell>Finished</TableCell>
                         <TableCell>Edit</TableCell>
                     </TableRow>
                 </TableHead>
@@ -71,7 +86,31 @@ export default function WeeklyTable() {
                             <TableCell>{row["task_name"]}</TableCell>
                             <TableCell>{row.time}</TableCell>
                             <TableCell>{row.date.substring(5, 10)}</TableCell>
-                            <TableCell>{row["is_finished"]}</TableCell>
+                            <TableCell>
+                                {
+                                    (row["is_finished"] === "finished") ? 
+                                    <input
+                                        type="radio"
+                                        checked={row["is_finished"] === "finished"}
+                                        disabled={!disable[row.task_id]}
+                                        onClick={(event) => {
+                                            handleIsFinished(event, {
+                                                id:  row.task_id,
+                                            })
+                                        }}
+                                    /> : 
+                                    <input
+                                        type="radio"
+                                        checked={row["is_finished"] === "finished"}
+                                        disabled={!disable[row.task_id]}
+                                        onClick={(event) => {
+                                            handleIsFinished(event, {
+                                                id:  row.task_id,
+                                            })
+                                        }}
+                                    />
+                                }
+                            </TableCell>
                             <TableCell>
                                 {
                                     (disable[row.task_id] === false || disable[row.task_id] === undefined) ?
