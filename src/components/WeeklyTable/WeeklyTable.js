@@ -22,6 +22,7 @@ function preventDefault(event) {
 export default function WeeklyTable() {
     const [rows, setRows] = useState([]);
     const [disable, setDisable] = useState([{0: null}]);
+    const [change, setChange] = useState([{}]);
     useEffect(() => {
         fetchData()
     }, [])
@@ -47,22 +48,37 @@ export default function WeeklyTable() {
         console.log("Delete ", row.task_name)
     }
 
-    const handleSave = (event, row) => {
+    const handleSave = (event, row, value) => {
         console.log("Save ", row.task_name)
+        // Check change and row's information
+        console.log(row.id);
+        const firstIndex = rows[0].task_id;
+        const index = row.id - firstIndex;
+        if (change[row.id] !== undefined) {
+            if (change[row.id].isFinished !== rows[index].isFinished) {
+                var newRows = rows
+                if (newRows[index].is_finished === "progress") {
+                    newRows[index].is_finished = "finished"
+                } else {
+                    newRows[index].is_finished = "progress"
+                }
+                setRows(newRows)
+            }
+        }
     }
 
     const handleIsFinished = (event, row) => {
-        const firstIndex = rows[0].task_id;
-        const index = row.id - firstIndex;
-        var newRows = rows
-        if (newRows[index].is_finished === "progress") {
-            newRows[index].is_finished = "finished"
-        } else {
-            newRows[index].is_finished = "progress"
-        }
-        console.log("newRows: ", newRows)
-        console.log("changedRowTask: ", index)
-        setRows(newRows)
+        // const firstIndex = rows[0].task_id;
+        // const index = row.id - firstIndex;
+        // var newRows = rows
+        // if (newRows[index].is_finished === "progress") {
+        //     newRows[index].is_finished = "finished"
+        // } else {
+        //     newRows[index].is_finished = "progress"
+        // }
+        // console.log("newRows: ", newRows)
+        // console.log("changedRowTask: ", index)
+        // setRows(newRows)
     }
 
     return (
@@ -87,29 +103,31 @@ export default function WeeklyTable() {
                             <TableCell>{row.time}</TableCell>
                             <TableCell>{row.date.substring(5, 10)}</TableCell>
                             <TableCell>
-                                {
-                                    (row["is_finished"] === "finished") ? 
-                                    <input
-                                        type="radio"
-                                        checked={row["is_finished"] === "finished"}
-                                        disabled={!disable[row.task_id]}
-                                        onClick={(event) => {
-                                            handleIsFinished(event, {
-                                                id:  row.task_id,
-                                            })
-                                        }}
-                                    /> : 
-                                    <input
-                                        type="radio"
-                                        checked={row["is_finished"] === "finished"}
-                                        disabled={!disable[row.task_id]}
-                                        onClick={(event) => {
-                                            handleIsFinished(event, {
-                                                id:  row.task_id,
-                                            })
-                                        }}
-                                    />
-                                }
+                                <input
+                                    type="checkbox"
+                                    // checked={row["is_finished"] === "finished"}
+                                    defaultChecked={row["is_finished"] === "finished"}
+                                    disabled={!disable[row.task_id]}
+                                    onClick={(event) => {
+                                        // handleIsFinished(event, {
+                                        //     id:  row.task_id,
+                                        // })
+                                        const firstIndex = rows[0].task_id;
+                                        const index = row.task_id - firstIndex;
+                                        var value = ""
+                                        if (rows[index].is_finished === "progress") {
+                                            value = "finished"
+                                        } else {
+                                            value = "progress"
+                                        }
+                                        setChange({
+                                            ...change,
+                                            [row.task_id]: {
+                                                "isFinished": value
+                                            }
+                                        })
+                                    }}
+                                /> 
                             </TableCell>
                             <TableCell>
                                 {
@@ -140,7 +158,9 @@ export default function WeeklyTable() {
                                         />
                                         <SaveAltIcon
                                             onClick={(event) => {
-                                                handleSave(event, row)
+                                                handleSave(event, {
+                                                    id: row.task_id,
+                                                })
                                             }}
                                         />
                                     </div>
