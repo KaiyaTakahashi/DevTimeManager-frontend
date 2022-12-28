@@ -38,11 +38,22 @@ export default function WeeklyTable() {
     }
 
     const handleEdit = (event, row) => {
-        console.log(rows)
+        if (disable[row.id] == true) {
+            // When Cancel is clicked
+            console.log("Edit => noEdit")
+            console.log("data: ", row.data)
+            const index = row.id - rows[0].task_id;
+            console.log("original: ", rows[index])
+            // Check if there's any changes between row.data and rows[row.id]
+        } else {
+            // When Edit is clicked
+            console.log("noEdit => Edit")
+        }
         setDisable({
             ...disable,
             [row.id]: row.value
         })
+        console.log(disable)
     }
     const handleDelete = (event, row) => {
         console.log("Delete ", row.task_name)
@@ -52,8 +63,7 @@ export default function WeeklyTable() {
         console.log("Save ", row.task_name)
         // Check change and row's information
         console.log(row.id);
-        const firstIndex = rows[0].task_id;
-        const index = row.id - firstIndex;
+        const index = row.id - rows[0].task_id;
         if (change[row.id] !== undefined) {
             if (change[row.id].isFinished !== rows[index].isFinished) {
                 var newRows = rows
@@ -112,8 +122,7 @@ export default function WeeklyTable() {
                                         // handleIsFinished(event, {
                                         //     id:  row.task_id,
                                         // })
-                                        const firstIndex = rows[0].task_id;
-                                        const index = row.task_id - firstIndex;
+                                        const index = row.id - rows[0].task_id;
                                         var value = ""
                                         if (rows[index].is_finished === "progress") {
                                             value = "finished"
@@ -147,6 +156,7 @@ export default function WeeklyTable() {
                                             handleEdit(event, {
                                                 id:  row.task_id,
                                                 value: false,
+                                                data: row,
                                             })
                                         }}
                                         >
