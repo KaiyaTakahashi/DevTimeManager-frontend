@@ -18,13 +18,15 @@ const Home = () => {
           <Logout></Logout>
         </div>
       </header> */}
-      <div>
-        <h1>Timer</h1>
-        <Timer></Timer>
+      <div className="contents-box">
+        <div>
+          <h1>Timer</h1>
+          <Timer></Timer>
+        </div>
+        <h1>Weekly Table</h1>
+        <WeeklyTable></WeeklyTable>
+        <ProgressGraph></ProgressGraph>
       </div>
-      <h1>Weekly Table</h1>
-      <WeeklyTable></WeeklyTable>
-      <ProgressGraph></ProgressGraph>
     </div>
   );
 };
