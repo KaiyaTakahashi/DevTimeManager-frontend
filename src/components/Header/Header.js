@@ -1,68 +1,33 @@
 import * as React from 'react';
-import { useState } from 'react';
-import PropTypes from 'prop-types';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import Link from '@mui/material/Link';
-import Login from '../GoogleButton/Login';
-import Logout from '../GoogleButton/Logout';
 import logo from '../../images/DevTimeManagerLogo.png';
+import Login from '../GoogleButton/Login';
+import { IconButton, Avatar } from '@mui/material';
 
-function Header(props) {
-  const { sections, title } = props;
-  const [isOpen, setIsOpen] = useState(false);
-  return (
-    <React.Fragment>
-      <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <img src={logo} width="30px"></img>
-        <Typography
-          component="h2"
-          variant="h5"
-          color="inherit"
-          align="center"
-          noWrap
-          sx={{ flex: 1 }}
-        >
-          {title}
-        </Typography>
-
-        {/* <Button variant="outlined" size="small">
-          Sign up
-        </Button> */}
-        {/* <Logout /> */}
-        <Login />
-      </Toolbar>
-      <Toolbar
-        component="nav"
-        variant="dense"
-        sx={{ justifyContent: 'space-between', overflowX: 'auto' }}
-      >
-        {/* {sections.map((section) => (
-          <Link
-            color="inherit"
-            noWrap
-            key={section.title}
-            variant="body2"
-            href={section.url}
-            sx={{ p: 1, flexShrink: 0 }}
-          >
-            {section.title}
-          </Link>
-        ))} */}
-      </Toolbar>
-    </React.Fragment>
-  );
+const handleOpenUserMenu = () => {
+  
 }
 
-Header.propTypes = {
-  sections: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      url: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
-  title: PropTypes.string.isRequired,
-};
+function Header() {
+  return (
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static" style={{ background: '#ffff' }}>
+        <Toolbar>
+          <img src={logo} width="50px"></img>
+          <Typography variant="h4" component="div" sx={{ flexGrow: 1 }} color="black">
+            DEV TIME MANAGER
+          </Typography>
+          <Login></Login>
+          <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+            <Avatar></Avatar>
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+    </Box>
+  );
+}
 
 export default Header;

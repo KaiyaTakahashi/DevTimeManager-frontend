@@ -9,7 +9,7 @@
     --clr-bg: #ffff;
     --clr-text: #151515;
     --clr-accent: hsl(192, 100%, 73%);
-    --clr-gradual: linear-gradient(to right,hsl(253, 100%, 54%), hsl(192, 100%, 73%));
+    --clr-gradual: linear-gradient(to right,hsl(253, 100%, 54%), hsl(222, 100%, 64%));
     --clr-dark: rgb(66, 66, 66);
     --clr-orange: rgb(255, 152, 74);
 
@@ -81,11 +81,9 @@
 
 /* Home View */
 #home-window {
-    background-color: rgb(196, 249, 232);
+    background: linear-gradient(hsl(205, 100%, 62%), hsl(188, 100%, 91%));
     display: flex;
     flex-direction: column;
-    padding-left: 50px;
-    padding-right: 50px;
 }
 
 /* Header */
@@ -269,5 +267,10 @@
         align-items: center;
         flex-direction: column;
         row-gap: 50px;
+    }
+
+    /* content box */
+    .contents-box {
+        display: unset;
     }
 }

@@ -10,7 +10,7 @@ import Header from "../components/Header/Header";
 const Home = () => {
   return (
     <div id="home-window">
-      <Header title="DEV TIME MANAGER"></Header>
+      <Header></Header>
       {/* <header id="home-header">
         <h1 className="app-title">DEV TIME MANAGER</h1>
         <div id="google-buttons">

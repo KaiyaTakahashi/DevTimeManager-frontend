@@ -10,7 +10,7 @@ var Login = () => {
     const onSuccess = (res) => {
         console.log("Login successfull",res);
         Axios.post('http://localhost:3001/api/create_tokens', res).then((response) => {
-            console.log("This is response", response.data);
+            console.log("This is response", response);
             localStorage.setItem("isLoggedin", true)
         }).catch((err) => {
             console.log(err.message);

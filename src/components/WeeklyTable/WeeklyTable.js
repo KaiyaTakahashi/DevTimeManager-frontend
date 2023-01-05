@@ -56,7 +56,23 @@ export default function WeeklyTable() {
         console.log(disable)
     }
     const handleDelete = (event, row) => {
-        console.log("Delete ", row.task_name)
+        if (window.confirm("Do you want to delete the task \"" + row.task_name + "\"?")) {
+            Axios.delete("http://localhost:3001/delete", {
+                data: {
+                    id: row.task_id,
+                }
+            }).then((response) => {
+                console.log(response);
+            })
+            const newRows = rows;
+            console.log("oldRows: ", rows)
+            newRows.splice(rows.indexOf(row), 1);
+            console.log("newRows: ", newRows)
+            setRows(newRows);
+            console.log("successfully deleted a task");
+        } else {
+            console.log("deletion canceled");
+        }
     }
 
     const handleSave = (event, row, value) => {
@@ -119,10 +135,7 @@ export default function WeeklyTable() {
                                     defaultChecked={row["is_finished"] === "finished"}
                                     disabled={!disable[row.task_id]}
                                     onClick={(event) => {
-                                        // handleIsFinished(event, {
-                                        //     id:  row.task_id,
-                                        // })
-                                        const index = row.id - rows[0].task_id;
+                                        const index = row.task_id - rows[0].task_id;
                                         var value = ""
                                         if (rows[index].is_finished === "progress") {
                                             value = "finished"
@@ -135,6 +148,7 @@ export default function WeeklyTable() {
                                                 "isFinished": value
                                             }
                                         })
+                                        console.log("this is change: ", change)
                                     }}
                                 /> 
                             </TableCell>

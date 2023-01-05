@@ -25,9 +25,7 @@ function Timer() {
     } = useStopwatch({ autoStart: false });
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const onSubmit = (data) => {
-        console.log(data.isFinished)
-        console.log("isLoggedin: ",localStorage.getItem("isLoggedin"))
-        if (localStorage.getItem("isLoggedin")) {
+        if (localStorage.getItem("isLoggedin") === "true") {
             if (window.confirm("Do you want to push this event to google calendar?")) {
                 // Create an event
                 const today = new Date();
@@ -50,15 +48,15 @@ function Timer() {
             window.alert("Task was saved")
         }
         /* Insert task into database */
-        // Axios.post("http://localhost:3001/tasks/insert", {
-        //     taskName: data.task,
-        //     isFinished: data.isFinished,
-        //     date: new Date(),
-        //     time: hours + ":" + minutes + ":" + seconds,
-        // }).then((response) => {
-        //     console.log("Task is stored in tasks")
-        //     console.log(response);
-        // })
+        Axios.post("http://localhost:3001/tasks/insert", {
+            taskName: data.task,
+            isFinished: data.isFinished,
+            date: new Date(),
+            time: hours + ":" + minutes + ":" + seconds,
+        }).then((response) => {
+            console.log("Task is stored in tasks")
+            console.log(response);
+        })
         /* Insert task into weekly_tasks */
         // Axios.post("http://localhost:3001/weekly_tasks/insert", {
         //     date: new Date().toISOString().split('T')[0],
