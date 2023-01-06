@@ -16,6 +16,7 @@
     --fs-h1: 3rem;
     --fs-h2: 2.25rem;
     --fs-h3: 2rem;
+    --fs-h4: 1.5rem;
     --fs-body: 1rem;
 
     --imgs: 250px;
@@ -26,14 +27,8 @@
 }
 
 /* Title */
-.app-title::after {
-    content: '';
-    display: block;
-    width: 100%;
-    height: 1px;
-    margin: 0.5em auto 1em;
-    background: var(--clr-gradual);
-    opacity: 1;
+#title {
+    font-size: var(--fs-h3);
 }
 
 /* Button */
@@ -246,6 +241,11 @@
 }
 
 @media (max-width: 375px) {
+    /* Title */
+    #title {
+        font-size: var(--fs-h4);
+    }
+
     /* Header */
     #home-header {
         font-size: 13px;

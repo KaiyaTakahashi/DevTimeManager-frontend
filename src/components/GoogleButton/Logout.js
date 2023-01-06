@@ -12,6 +12,7 @@ var Logout = () => {
             onLogoutSuccess={() => {
                 console.log("Log out successfull")
                 localStorage.setItem("isLoggedin", false);
+                localStorage.setItem("imageUrl", "");
             }}
         />
     )
