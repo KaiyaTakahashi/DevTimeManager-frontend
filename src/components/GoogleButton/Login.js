@@ -8,10 +8,10 @@ const clientId = "985770492377-a2nlp1h94mi7s7v861khiturmfqs9gsm.apps.googleuserc
 var Login = () => {
     const onSuccess = (res) => {
         console.log("Login successfull! current user: ", res);
+        localStorage.setItem("isLoggedin", true);
         localStorage.setItem("imageUrl", res.profileObj.imageUrl)
         Axios.post('http://localhost:3001/api/create_tokens', res).then((response) => {
             console.log("This is response", response);
-            localStorage.setItem("isLoggedin", true)
         }).catch((err) => {
             console.log(err.message);
             localStorage.setItem("isLoggedin", false);
@@ -29,7 +29,7 @@ var Login = () => {
             // Refresh Token
             responseType='code'
             accessType='offline'
-            scope='openid email profile https://www.googleapis.com/auth/calendar'
+            scope='openid email https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/calendar'
         />
     )
 }
