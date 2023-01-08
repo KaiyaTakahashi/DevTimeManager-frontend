@@ -1,10 +1,15 @@
 import * as React from 'react';
-import Link from '@mui/material/Link';
-import Table from '@mui/material/Table';
-import { Button, Paper, TableBody } from '@mui/material';
-import { TableCell } from '@mui/material';
-import { TableHead } from '@mui/material';
-import { TableRow } from '@mui/material';
+import { 
+    TableCell,
+    TableHead, 
+    TableRow,
+    Paper,
+    TableBody,
+    Table,
+    Link,
+    TablePagination
+} from '@mui/material';
+
 import  Axios  from 'axios';
 import { useEffect, useState } from 'react';
 
@@ -23,6 +28,8 @@ export default function WeeklyTable() {
     const [rows, setRows] = useState([]);
     const [disable, setDisable] = useState([{0: null}]);
     const [change, setChange] = useState([{}]);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [page, setPage] = useState(0);
     useEffect(() => {
         fetchData()
     }, [])
@@ -107,98 +114,133 @@ export default function WeeklyTable() {
         // setRows(newRows)
     }
 
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    }
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(+event.target.value);
+        console.log("pagina: ", rowsPerPage)
+        setPage(0);
+    }
+
+    const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+
     return (
-        <div id='weekly-table'>
-        <faCoffee></faCoffee>
-        <React.Fragment>
-            <Paper className='container'>
-            <Table size='small'>
-                <TableHead>
-                    <TableRow>
-                        <TableCell>Task Name</TableCell>
-                        <TableCell>Time</TableCell>
-                        <TableCell>Date</TableCell>
-                        <TableCell>Finished</TableCell>
-                        <TableCell>Edit</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {rows.map((row) => (
-                        <TableRow>
-                            <TableCell>{row["task_name"]}</TableCell>
-                            <TableCell>{row.time}</TableCell>
-                            <TableCell>{row.date.substring(5, 10)}</TableCell>
-                            <TableCell>
-                                <input
-                                    type="checkbox"
-                                    // checked={row["is_finished"] === "finished"}
-                                    defaultChecked={row["is_finished"] === "finished"}
-                                    disabled={!disable[row.task_id]}
-                                    onClick={(event) => {
-                                        const index = row.task_id - rows[0].task_id;
-                                        var value = ""
-                                        if (rows[index].is_finished === "progress") {
-                                            value = "finished"
-                                        } else {
-                                            value = "progress"
-                                        }
-                                        setChange({
-                                            ...change,
-                                            [row.task_id]: {
-                                                "isFinished": value
-                                            }
-                                        })
-                                        console.log("this is change: ", change)
-                                    }}
-                                /> 
-                            </TableCell>
-                            <TableCell>
-                                {
-                                    (disable[row.task_id] === false || disable[row.task_id] === undefined) ?
-                                    <EditIcon
-                                    onClick={(event) => {
-                                        handleEdit(event, {
-                                            id:  row.task_id,
-                                            value: true,
-                                        })
-                                    }}
-                                    >
-                                    </EditIcon> : 
-                                    <div className='icon-box'>
-                                        <CancelIcon
-                                        onClick={(event) => {
-                                            handleEdit(event, {
-                                                id:  row.task_id,
-                                                value: false,
-                                                data: row,
-                                            })
-                                        }}
-                                        >
-                                        </CancelIcon>
-                                        <DeleteIcon
+        <div>
+            <h1>Weekly Table</h1>
+            <div id='weekly-table'>
+                <faCoffee></faCoffee>
+                <React.Fragment>
+                    <Paper className='container'>
+                    <Table size='small'>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Task Name</TableCell>
+                                <TableCell>Time</TableCell>
+                                <TableCell>Date</TableCell>
+                                <TableCell>Finished</TableCell>
+                                <TableCell>Edit</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => (
+                                <TableRow>
+                                    <TableCell>{row["task_name"]}</TableCell>
+                                    <TableCell>{row.time}</TableCell>
+                                    <TableCell>{row.date.substring(5, 10)}</TableCell>
+                                    <TableCell>
+                                        <input
+                                            type="checkbox"
+                                            // checked={row["is_finished"] === "finished"}
+                                            defaultChecked={row["is_finished"] === "finished"}
+                                            disabled={!disable[row.task_id]}
                                             onClick={(event) => {
-                                                handleDelete(event, row)
+                                                const index = row.task_id - rows[0].task_id;
+                                                var value = ""
+                                                if (rows[index].is_finished === "progress") {
+                                                    value = "finished"
+                                                } else {
+                                                    value = "progress"
+                                                }
+                                                setChange({
+                                                    ...change,
+                                                    [row.task_id]: {
+                                                        "isFinished": value
+                                                    }
+                                                })
+                                                console.log("this is change: ", change)
                                             }}
-                                        />
-                                        <SaveAltIcon
+                                        /> 
+                                    </TableCell>
+                                    <TableCell>
+                                        {
+                                            (disable[row.task_id] === false || disable[row.task_id] === undefined) ?
+                                            <EditIcon
                                             onClick={(event) => {
-                                                handleSave(event, {
-                                                    id: row.task_id,
+                                                handleEdit(event, {
+                                                    id:  row.task_id,
+                                                    value: true,
                                                 })
                                             }}
-                                        />
-                                    </div>
-                                }
-                            </TableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-            </Paper>
-            <Link color={"primary"} href="#" onClick={preventDefault} sx={{ mt: 3}}>
-                See more tasks
-            </Link>
-        </React.Fragment>
+                                            >
+                                            </EditIcon> : 
+                                            <div className='icon-box'>
+                                                <CancelIcon
+                                                onClick={(event) => {
+                                                    handleEdit(event, {
+                                                        id:  row.task_id,
+                                                        value: false,
+                                                        data: row,
+                                                    })
+                                                }}
+                                                >
+                                                </CancelIcon>
+                                                <DeleteIcon
+                                                    onClick={(event) => {
+                                                        handleDelete(event, row)
+                                                    }}
+                                                />
+                                                <SaveAltIcon
+                                                    onClick={(event) => {
+                                                        handleSave(event, {
+                                                            id: row.task_id,
+                                                        })
+                                                    }}
+                                                />
+                                            </div>
+                                        }
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                            {emptyRows > 0 && (
+                                <TableRow style={{ height: (0 ? 33 : 33) * emptyRows }}>
+                                    <TableCell colSpan={3}/>
+                                </TableRow>
+                            )}
+                        </TableBody>
+                    </Table>
+                    <TablePagination
+                        rowsPerPageOptions={[5, 10, 15]}
+                        component="div"
+                        count={rows.length}
+                        page={page}
+                        backIconButtonProps={{
+                            "aria-label": "previous page"
+                        }}
+                        nextIconButtonProps={{
+                            "aria-label": "next page"
+                        }}
+
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
+                    </Paper>
+                    {/* <Link color={"primary"} href="#" onClick={preventDefault} sx={{ mt: 3}}>
+                        See more tasks
+                    </Link> */}
+                </React.Fragment>
+                </div>
         </div>
     );
 }

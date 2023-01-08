@@ -67,57 +67,61 @@ function Timer() {
         // })
     }
     return (
-        <form id="timer-flex" onSubmit={handleSubmit(onSubmit)}>
-            <div className="timer-item">
-                <br></br>
-                <span>Task: </span>
-                <TextField
-                    label="Task"
-                    variant="outlined"
-                    required
-                    defaultValue="" {...register("task")}
-                />
-            </div>
-            <div className="timer-item" id="timer-count-box">
-                <div id="timer-count">
-                    <span>{hours}</span>hrs <span>{minutes}</span>mins <span>{seconds}</span>secs
+        <div>
+            <h1>Timer</h1>
+
+            <form id="timer-flex" onSubmit={handleSubmit(onSubmit)}>
+                <div className="timer-item">
+                    <br></br>
+                    <span>Task: </span>
+                    <TextField
+                        label="Task"
+                        variant="outlined"
+                        required
+                        defaultValue="" {...register("task")}
+                    />
                 </div>
-                {/* <p>{isRunning ? 'Running' : 'Not Running'}</p> */}
-                <div id="timer-count-buttons">
-                    {
-                        isRunning ? <Button variant="contained" onClick={pause}>Pause</Button> : <Button variant="contained" onClick={start}>Start</Button>
-                    }
-                    <Button variant="contained" onClick={reset} color="secondary">Reset</Button>
-                </div>
-            </div>
-            <div className="timer-item" id="timer-status-box">
-                <div id="timer-status-radios">
-                    <div className="radio">
-                        <label>
-                            <input 
-                                type="radio"
-                                {...register("isFinished", {required: "Status is required"})}
-                                value="progress"
-                            />
-                            In Progress
-                        </label>
+                <div className="timer-item" id="timer-count-box">
+                    <div id="timer-count">
+                        <span>{hours}</span>hrs <span>{minutes}</span>mins <span>{seconds}</span>secs
                     </div>
-                    <div className="radio">
-                        <label>
-                            <input
-                                type="radio"
-                                {...register("isFinished", {required: "Status is required"})}
-                                value="finished"
-                                defaultChecked={true}
-                            />
-                            Finished
-                        </label>
+                    {/* <p>{isRunning ? 'Running' : 'Not Running'}</p> */}
+                    <div id="timer-count-buttons">
+                        {
+                            isRunning ? <Button variant="contained" onClick={pause}>Pause</Button> : <Button variant="contained" onClick={start}>Start</Button>
+                        }
+                        <Button variant="contained" onClick={reset} color="secondary">Reset</Button>
                     </div>
                 </div>
-                <Button type="submit" variant="contained">Submit</Button>
-                {/* <pre>{JSON.stringify(watch(), null, 2)}</pre> */}
-            </div>
-        </form>
+                <div className="timer-item" id="timer-status-box">
+                    <div id="timer-status-radios">
+                        <div className="radio">
+                            <label>
+                                <input 
+                                    type="radio"
+                                    {...register("isFinished", {required: "Status is required"})}
+                                    value="progress"
+                                />
+                                In Progress
+                            </label>
+                        </div>
+                        <div className="radio">
+                            <label>
+                                <input
+                                    type="radio"
+                                    {...register("isFinished", {required: "Status is required"})}
+                                    value="finished"
+                                    defaultChecked={true}
+                                />
+                                Finished
+                            </label>
+                        </div>
+                    </div>
+                    <Button type="submit" variant="contained">Submit</Button>
+                    {/* <pre>{JSON.stringify(watch(), null, 2)}</pre> */}
+                </div>
+            </form>
+        </div>
       );
 }
 

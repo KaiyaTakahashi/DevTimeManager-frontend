@@ -62,6 +62,8 @@ function Header() {
             setLoginData("true");
             setImageUrl(decoded.picture);
             localStorage.setItem("imageUrl", decoded.picture);
+            console.log("this is imageURL: ", imageUrl);
+            console.log("this is localstorate: ", localStorage.getItem("imageUrl"));
         }).catch((err) => {
             console.log(err.message);
             localStorage.setItem("isLoggedin", false);
