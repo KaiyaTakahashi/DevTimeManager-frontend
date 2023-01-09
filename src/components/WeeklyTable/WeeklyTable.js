@@ -225,6 +225,7 @@ export default function WeeklyTable() {
                         component="div"
                         count={rows.length}
                         page={page}
+                        rowsPerPage={rowsPerPage}
                         backIconButtonProps={{
                             "aria-label": "previous page"
                         }}
