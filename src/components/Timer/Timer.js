@@ -30,7 +30,6 @@ function Timer() {
                 // Create an event
                 const today = new Date();
                 console.log("Event was created");
-                console.log(today.createStartDate(hours, minutes, days));
                 Axios.post('http://localhost:3001/create_event', {
                     summary: data.task,
                     description: "",
@@ -67,8 +66,8 @@ function Timer() {
         // })
     }
     return (
-        <div>
-            <h1>Timer</h1>
+        <div id="timer-div">
+            <h1 className="section-title">Timer</h1>
 
             <form id="timer-flex" onSubmit={handleSubmit(onSubmit)}>
                 <div className="timer-item">

@@ -15,6 +15,7 @@ import Axios from 'axios';
 
 Axios.defaults.withCredentials = true
 
+// Should be in env file
 const clientId = "985770492377-a2nlp1h94mi7s7v861khiturmfqs9gsm.apps.googleusercontent.com";
 
 function Header() {
@@ -62,8 +63,6 @@ function Header() {
             setLoginData("true");
             setImageUrl(decoded.picture);
             localStorage.setItem("imageUrl", decoded.picture);
-            console.log("this is imageURL: ", imageUrl);
-            console.log("this is localstorate: ", localStorage.getItem("imageUrl"));
         }).catch((err) => {
             console.log(err.message);
             localStorage.setItem("isLoggedin", false);
@@ -90,7 +89,7 @@ function Header() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" style={{ background: '#ffff' }}>
+      <AppBar position="fixed" style={{ background: '#ffff'}}>
         <Toolbar>
           <img src={logo} width="50px"></img>
           <Typography id='title' variant="h4" component="div" sx={{ flexGrow: 1 }} color="black">

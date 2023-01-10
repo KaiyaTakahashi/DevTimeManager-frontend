@@ -11,7 +11,7 @@
     --clr-accent: hsl(192, 100%, 73%);
     --clr-gradual: linear-gradient(to right,hsl(253, 100%, 54%), hsl(222, 100%, 64%));
     --clr-dark: rgb(66, 66, 66);
-    --clr-orange: rgb(255, 152, 74);
+    --clr-section-title: rgb(0, 0, 0);
 
     --fs-h1: 3rem;
     --fs-h2: 2.25rem;
@@ -23,12 +23,21 @@
     --radius-box: 10px;
     --min-width: 800px;
 
+    --flex-pad: 30px 20px 30px 20px;
+
+    --bg-timer: url('/Users/kaiyatakahashi/Desktop/DevTimeManager/client/src/images/festivals.jpg');
+
     --bs: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    --box-shadow: 0px 0px 10px 0px rgb(101, 101, 152);
 }
 
 /* Title */
 #title {
     font-size: var(--fs-h3);
+}
+
+.section-title {
+    color: var(--clr-section-title);
 }
 
 /* Button */
@@ -87,6 +96,11 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
 }
 
 #google-buttons {
@@ -105,16 +119,20 @@
 }
 
 /* Timer */
+#timer-div {
+    margin-top: 100px;
+}
+
 #timer-flex {
     display: flex;
     flex-direction: row;
     margin: 0px 0px 30px 0px;
-    padding: 10px 10px 10px 10px;
+    padding: var(--flex-pad);
     background-color: white;
     justify-content: space-between;
     align-items: center;
-    border-radius: var(--radius-box);
     min-width: var(--min-width);
+    box-shadow: var(--box-shadow);
 }
 
 #timer-count-box {
@@ -148,11 +166,13 @@
     align-items: center;
 }
 
-/* Weekly talbe */
-#weekly-table {
+/* Task Table */
+#task-table {
     background-color: white;
     min-width: var(--min-width);
-    border-radius: var(--radius-box);
+    padding: var(--flex-pad);
+    box-shadow: var(--box-shadow);
+    margin-bottom: 30px;
 }
 
 .container {
@@ -168,9 +188,12 @@
     max-width: 1px;
 }
 
-/* Weekly Progress */
-#weekly-progress {
-    min-width: 90%;
+/* Weekly Column */
+#weekly-column {
+    min-width: var(--min-width);
+    padding: var(--flex-pad);
+    box-shadow: var(--box-shadow);
+    margin-bottom: 50px;
 }
 
 
@@ -193,7 +216,11 @@
         min-width: 700px;
     }
     
-    #weekly-table {
+    #task-table {
+        min-width: 700px;
+    }
+
+    #weekly-column {
         min-width: 700px;
     }
 }
@@ -203,9 +230,14 @@
         min-width: 80%;
     }
     
-    #weekly-table {
-        min-width: 80%;
+    #task-table {
+        min-width: 400px;
     }
+
+    #weekly-column {
+        min-width: 400px;
+    }
+
     /* Header */
     #home-header {
         font-size: 13px;
@@ -270,12 +302,20 @@
         margin: 0px 10px 0px 10px;
     }
 
-    #weekly-table {
+    #task-table {
+        margin: 0px 10px 0px 10px;
+    }
+
+    #weekly-column {
         margin: 0px 10px 0px 10px;
     }
 
     /* content box */
     .contents-box {
         display: unset;
+    }
+
+    .section-title {
+        margin-left: 20px;
     }
 }

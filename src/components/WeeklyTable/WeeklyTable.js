@@ -128,9 +128,8 @@ export default function WeeklyTable() {
 
     return (
         <div>
-            <h1>Weekly Table</h1>
-            <div id='weekly-table'>
-                <faCoffee></faCoffee>
+            <h1 className='section-title'>Task Table</h1>
+            <div id='task-table'>
                 <React.Fragment>
                     <Paper className='container'>
                     <Table size='small'>
