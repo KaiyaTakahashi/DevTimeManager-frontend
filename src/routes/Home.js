@@ -18,13 +18,9 @@ const Home = () => {
           <Logout></Logout>
         </div>
       </header> */}
-      <div className="contents-box">
-        <div>
-          <Timer></Timer>
-        </div>
-        <WeeklyTable></WeeklyTable>
-        <ProgressGraph></ProgressGraph>
-      </div>
+      <Timer></Timer>
+      <WeeklyTable></WeeklyTable>
+      <ProgressGraph></ProgressGraph>
     </div>
   );
 };

@@ -127,7 +127,7 @@ export default function WeeklyTable() {
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
     return (
-        <div>
+        <div id='task-table-div'>
             <h1 className='section-title'>Task Table</h1>
             <div id='task-table'>
                 <React.Fragment>

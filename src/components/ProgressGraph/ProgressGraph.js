@@ -35,7 +35,7 @@ export default function Chart() {
     fetchData()
   }, [])
   return (
-    <div>
+    <div id='weekly-column-div'>
       <h1 className="section-title">Weekly Column</h1>
       <Paper id='weekly-column'>
         <ResponsiveContainer width="100%" height={400}>

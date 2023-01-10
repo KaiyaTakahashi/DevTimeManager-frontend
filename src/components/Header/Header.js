@@ -85,8 +85,6 @@ function Header() {
     )
 }
 
-
-
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed" style={{ background: '#ffff'}}>
