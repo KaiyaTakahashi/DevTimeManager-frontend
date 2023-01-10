@@ -19,6 +19,12 @@ Axios.defaults.withCredentials = true
 const clientId = "985770492377-a2nlp1h94mi7s7v861khiturmfqs9gsm.apps.googleusercontent.com";
 
 function Header() {
+  const createImage = (src) => {
+    const image = new Image(50, 50);
+    image.referrerPolicy = "no-referrer"
+    image.src = src;
+    return image;
+  }
 
   const [loginData, setLoginData] = useState(
     localStorage.getItem("isLoggedin")
@@ -26,11 +32,11 @@ function Header() {
     : null
   );
   const [imageUrl, setImageUrl] = useState(
-    localStorage.getItem("imageUrl")
-    ? localStorage.getItem("imageUrl")
+    localStorage.getItem("imageUrl") !== null
+    ? createImage(localStorage.getItem("imageUrl"))
     : null
   )
-
+  console.log("this is imageUrl",imageUrl)
   const [anchorElUser, setAnchorElUser] = useState(null);
 
   const handleOpenUserMenu = (event) => {
