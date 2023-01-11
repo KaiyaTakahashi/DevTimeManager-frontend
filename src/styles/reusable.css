@@ -1,0 +1,35 @@
+/* Custome properties */
+:root {
+    --ff-primary: 'Poppins';
+    --ff-secondary:sans-serif;
+
+    --fw-reg: 300;
+    --fw-bold: 900;
+
+    --clr-bg: #ffff;
+    --clr-text: #151515;
+    --clr-accent: hsl(192, 100%, 73%);
+    --clr-gradual: linear-gradient(to right,hsl(253, 100%, 54%), hsl(222, 100%, 64%));
+    --clr-dark: rgb(66, 66, 66);
+    --clr-section-title: rgb(0, 0, 0);
+}
+
+.custom-button {
+    display: inline-block;
+    color: #fff;
+    background-color: rgb(95, 109, 183);
+    border: none;
+    padding: 7px 10px;
+    margin: 5px 5px 20px 5px;
+    border-radius: 0;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: inherit;
+    font-weight: bold;
+    box-shadow: 0px 3px rgb(34, 26, 78);
+}
+
+.custom-button:hover {
+    background-color: rgb(53, 71, 174);
+    transition: 0.5s;
+}

@@ -4,6 +4,7 @@ import { ResponsiveContainer, AreaChart, XAxis, YAxis, Area, Tooltip, CartesianG
 import { useState, useEffect } from 'react';
 import Axios from 'axios';
 import { Paper, chart } from '@mui/material';
+import Button from '../Button/Button';
 
 Axios.defaults.withCredentials = true;
 
@@ -16,12 +17,6 @@ const dataa = [
   {date: 'Fri', value: 2000},
   {date: 'Sat', value: 2400},
 ];
-
-function getPriorDate(today) {
-  var nextDate = new Date();
-  nextDate.setDate(today.getDate() - 1);
-  return nextDate;
-}
 
 export default function WeeklyColumn() {
   const theme = useTheme();
@@ -41,11 +36,9 @@ export default function WeeklyColumn() {
         index -= 1;
       }
       filteredData.splice(0, 0, {date: date, value: totalValue});
-      const yesterday = getPriorDate(today);
-      console.log("this is yester: ", yesterday)
-      today = yesterday;
-      console.log("this is today: ", today)
+      today.setDate(today.getDate() - 1);
     }
+    console.log(filteredData);
     setData(filteredData);
   }
 
@@ -70,16 +63,18 @@ export default function WeeklyColumn() {
       <h1 className="section-title">Weekly Column</h1>
       <Paper id='weekly-column'>
         <div>
-          <button onClick={() => {
-            handleRange(7);
-          }}>
-            Week
-          </button>
-          <button onClick={() => {
-            handleRange(31);
-          }}>
-            Month
-          </button>
+          <Button 
+            title="Week"
+            onClick={() => {
+              handleRange(7);
+            }}
+          />
+          <Button 
+            title="Month"
+            onClick={() => {
+              handleRange(31);
+            }}
+          />
         </div>
         <ResponsiveContainer width="100%" height={400}>
           <AreaChart data={data}>
