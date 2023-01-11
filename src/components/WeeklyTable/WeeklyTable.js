@@ -36,11 +36,6 @@ export default function WeeklyTable() {
     const fetchData = async () => {
         Axios.get("http://localhost:3001/tasks/get").then((response) => {
             setRows(response["data"]);
-            console.log(response)
-            // const arr = new Array(response["data"][response["data"].length - 1]["task_id"]).fill(false);
-            // setDisable(arr)
-            console.log("this is rows: ",rows)
-            console.log("this is dis: ", disable)
         })
     }
 
@@ -168,7 +163,6 @@ export default function WeeklyTable() {
                                                         "isFinished": value
                                                     }
                                                 })
-                                                console.log("this is change: ", change)
                                             }}
                                         /> 
                                     </TableCell>

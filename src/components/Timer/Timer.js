@@ -46,6 +46,7 @@ function Timer() {
             console.log("User is not logged in, but created task in a database");
             window.alert("Task was saved")
         }
+
         /* Insert task into database */
         Axios.post("http://localhost:3001/tasks/insert", {
             taskName: data.task,
@@ -57,13 +58,13 @@ function Timer() {
             console.log(response);
         })
         /* Insert task into weekly_tasks */
-        // Axios.post("http://localhost:3001/weekly_tasks/insert", {
-        //     date: new Date().toISOString().split('T')[0],
-        //     value: hours + Math.floor(minutes / 60),
-        // }).then((response) => {
-        //     console.log("Task is stored in weekly_tasks")
-        //     console.log(response);
-        // })
+        Axios.post("http://localhost:3001/weekly_tasks/insert", {
+            date: new Date(),
+            value: hours + Math.floor(minutes / 60),
+        }).then((response) => {
+            console.log("Task is stored in weekly_tasks")
+            console.log(response);
+        })
     }
     return (
         <div id="timer-div">

@@ -36,7 +36,7 @@ function Header() {
     ? createImage(localStorage.getItem("imageUrl"))
     : null
   )
-  console.log("this is imageUrl",imageUrl)
+
   const [anchorElUser, setAnchorElUser] = useState(null);
 
   const handleOpenUserMenu = (event) => {
@@ -60,14 +60,12 @@ function Header() {
 
   var Login = () => {
     const onSuccess = (res) => {
-        console.log("Login successfull! current user: ", res);
         localStorage.setItem("isLoggedin", true);
         setLoginData("true");
         Axios.post('http://localhost:3001/api/create_tokens', res).then((response) => {
-            console.log("This is response", response);
             const decoded = jwt_decode(response.data.id_token);
             setLoginData("true");
-            setImageUrl(decoded.picture);
+            setImageUrl(createImage(decoded.picture));
             localStorage.setItem("imageUrl", decoded.picture);
         }).catch((err) => {
             console.log(err.message);
@@ -100,7 +98,7 @@ function Header() {
             DEV TIME MANAGER
           </Typography>
           <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-            <Avatar src={imageUrl}/>
+            <Avatar src={imageUrl.src}/>
           </IconButton>
           <Menu
             open={Boolean(anchorElUser)}
