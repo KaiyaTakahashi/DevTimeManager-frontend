@@ -17,7 +17,6 @@
 .custom-button {
     display: inline-block;
     color: #fff;
-    background-color: rgb(95, 109, 183);
     border: none;
     padding: 7px 10px;
     margin: 5px 5px 20px 5px;
@@ -26,10 +25,26 @@
     text-decoration: none;
     font-family: inherit;
     font-weight: bold;
-    box-shadow: 0px 3px rgb(34, 26, 78);
+    box-shadow: 2px 3px rgb(107, 102, 136);
 }
 
 .custom-button:hover {
     background-color: rgb(53, 71, 174);
     transition: 0.5s;
+}
+
+#blue {
+    background-color: rgb(154, 164, 215);
+}
+
+#green {
+    background-color: rgb(116, 251, 75);
+}
+
+#red {
+    background-color: rgb(255, 72, 72);
+}
+
+#reset {
+    background-color: rgb(255, 170, 72);
 }

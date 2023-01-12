@@ -20,7 +20,9 @@ const dataa = [
 
 export default function WeeklyColumn() {
   const theme = useTheme();
-  const [data, setData] = useState()
+  const [data, setData] = useState();
+  const [dispayData, setDisplayData] = useState(data);
+  const [range, setRange] = useState("w");
 
   function handleRange(days) {
     var today = new Date();
@@ -38,8 +40,10 @@ export default function WeeklyColumn() {
       filteredData.splice(0, 0, {date: date, value: totalValue});
       today.setDate(today.getDate() - 1);
     }
+    const t = new Date()
+    console.log(t.toLocaleDateString())
     console.log(filteredData);
-    setData(filteredData);
+    setDisplayData(filteredData);
   }
 
   const fetchData = async () => {
@@ -51,6 +55,7 @@ export default function WeeklyColumn() {
         newData.push({ date: response.data[index].date.substring(5, 10), value: response.data[index].value })
         index += 1;
       }
+      setDisplayData(newData)
       setData(newData);
       console.log("whole data: ", data);
     })
@@ -62,22 +67,28 @@ export default function WeeklyColumn() {
     <div id='weekly-column-div'>
       <h1 className="section-title">Weekly Column</h1>
       <Paper id='weekly-column'>
-        <div>
+        <div id='range-box'>
           <Button 
             title="Week"
             onClick={() => {
               handleRange(7);
+              setRange("w");
             }}
+            isTapped={range === "w"}
+            colour="blue"
           />
           <Button 
             title="Month"
             onClick={() => {
               handleRange(31);
+              setRange("m")
             }}
+            isTapped={range === "m"}
+            colour="blue"
           />
         </div>
         <ResponsiveContainer width="100%" height={400}>
-          <AreaChart data={data}>
+          <AreaChart data={dispayData}>
             <defs>
               <linearGradient id='color' x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stopColor="#2451B7" stopOpacity={0.4}></stop>

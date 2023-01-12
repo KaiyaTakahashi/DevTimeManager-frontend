@@ -4,6 +4,7 @@ import { useStopwatch } from 'react-timer-hook';
 import { useForm } from 'react-hook-form';
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button';
+import CustomButton from "../Button/Button";
 import Axios from 'axios';
 
 Axios.defaults.withCredentials = true;
@@ -25,10 +26,10 @@ function Timer() {
     } = useStopwatch({ autoStart: false });
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const onSubmit = (data) => {
+        const today = new Date();
         if (localStorage.getItem("isLoggedin") === "true") {
             if (window.confirm("Do you want to push this event to google calendar?")) {
                 // Create an event
-                const today = new Date();
                 console.log("Event was created");
                 Axios.post('http://localhost:3001/create_event', {
                     summary: data.task,
@@ -46,12 +47,12 @@ function Timer() {
             console.log("User is not logged in, but created task in a database");
             window.alert("Task was saved")
         }
-
+        today.setDate(today.getDate() - 1);
         /* Insert task into database */
         Axios.post("http://localhost:3001/tasks/insert", {
             taskName: data.task,
             isFinished: data.isFinished,
-            date: new Date(),
+            date: today,
             time: hours + ":" + minutes + ":" + seconds,
         }).then((response) => {
             console.log("Task is stored in tasks")
@@ -59,7 +60,7 @@ function Timer() {
         })
         /* Insert task into weekly_tasks */
         Axios.post("http://localhost:3001/weekly_tasks/insert", {
-            date: new Date(),
+            date: today,
             value: hours + Math.floor(minutes / 60),
         }).then((response) => {
             console.log("Task is stored in weekly_tasks")
@@ -88,9 +89,15 @@ function Timer() {
                     {/* <p>{isRunning ? 'Running' : 'Not Running'}</p> */}
                     <div id="timer-count-buttons">
                         {
-                            isRunning ? <Button variant="contained" onClick={pause}>Pause</Button> : <Button variant="contained" onClick={start}>Start</Button>
+                            // isRunning ? <Button variant="contained" onClick={pause}>Pause</Button> : <Button variant="contained" onClick={start}>Start</Button>
+                            isRunning ? <CustomButton colour="red" title="Pause" onClick={pause} /> : <CustomButton colour="green" title="Start" onClick={start} />
                         }
-                        <Button variant="contained" onClick={reset} color="secondary">Reset</Button>
+                        {/* <Button variant="contained" onClick={reset} color="secondary">Reset</Button> */}
+                        <CustomButton
+                            title="Reset"
+                            onClick={reset}
+                            colour="reset"
+                        />
                     </div>
                 </div>
                 <div className="timer-item" id="timer-status-box">
@@ -117,8 +124,12 @@ function Timer() {
                             </label>
                         </div>
                     </div>
-                    <Button type="submit" variant="contained">Submit</Button>
-                    {/* <pre>{JSON.stringify(watch(), null, 2)}</pre> */}
+                    {/* <Button type="submit" variant="contained">Submit</Button> */}
+                    <CustomButton
+                        isSubmit={true}
+                        title="Submit"
+                        colour="red"
+                    />
                 </div>
             </form>
         </div>
