@@ -6,7 +6,7 @@ const Button = ({ onClick, title, isTapped, colour, isSubmit }) => {
     <button
       className="custom-button"
       id={colour}
-      style={{ backgroundColor: isTapped ? "#3D45BA": ""}}
+      style={{ backgroundColor: isTapped ? "": "#3D45BA"}}
       onClick={onClick}
       type={ isSubmit ? "submit": "button"}
     >

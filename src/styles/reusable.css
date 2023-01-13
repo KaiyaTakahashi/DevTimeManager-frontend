@@ -1,17 +1,7 @@
 /* Custome properties */
 :root {
-    --ff-primary: 'Poppins';
-    --ff-secondary:sans-serif;
-
-    --fw-reg: 300;
-    --fw-bold: 900;
-
-    --clr-bg: #ffff;
-    --clr-text: #151515;
-    --clr-accent: hsl(192, 100%, 73%);
-    --clr-gradual: linear-gradient(to right,hsl(253, 100%, 54%), hsl(222, 100%, 64%));
-    --clr-dark: rgb(66, 66, 66);
-    --clr-section-title: rgb(0, 0, 0);
+    --high-timer: 40px;
+    --wth-timer: 70px;
 }
 
 .custom-button {
@@ -39,12 +29,24 @@
 
 #green {
     background-color: rgb(116, 251, 75);
+    height: var(--high-timer);
+    width: var(--wth-timer);
 }
 
 #red {
     background-color: rgb(255, 72, 72);
+    height: var(--high-timer);
+    width: var(--wth-timer);
 }
 
 #reset {
     background-color: rgb(255, 170, 72);
+    height: var(--high-timer);
+    width: var(--wth-timer);
+}
+
+#submit {
+    background-color: rgb(72, 81, 255);
+    height: var(--high-timer);
+    width: var(--wth-timer);
 }

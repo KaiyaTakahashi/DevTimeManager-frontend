@@ -22,7 +22,7 @@ export default function WeeklyColumn() {
   const theme = useTheme();
   const [data, setData] = useState();
   const [dispayData, setDisplayData] = useState(data);
-  const [range, setRange] = useState("w");
+  const [range, setRange] = useState("");
 
   function handleRange(days) {
     var today = new Date();
@@ -86,13 +86,22 @@ export default function WeeklyColumn() {
             isTapped={range === "m"}
             colour="blue"
           />
+          <Button 
+            title="Year"
+            onClick={() => {
+              handleRange(365);
+              setRange("y")
+            }}
+            isTapped={range === "y"}
+            colour="blue"
+          />
         </div>
         <ResponsiveContainer width="100%" height={400}>
           <AreaChart data={dispayData}>
             <defs>
               <linearGradient id='color' x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#2451B7" stopOpacity={0.4}></stop>
-                <stop offset="75%" stopColor="#2451B7" stopOpacity={0.05}></stop>
+                <stop offset="0%" stopColor="#2451B7" stopOpacity={0.8}></stop>
+                <stop offset="75%" stopColor="#2451B7" stopOpacity={0.1}></stop>
               </linearGradient>
             </defs>
             <Area dataKey="value" stroke='#2451B7' fill='url(#color)'/>
@@ -102,6 +111,7 @@ export default function WeeklyColumn() {
               axisLine={false} 
               tickLine={false} 
               tickCount={8}
+              unit="hrs"
             />
             <Tooltip></Tooltip>
             <CartesianGrid opacity={0.5} vertical={false} />

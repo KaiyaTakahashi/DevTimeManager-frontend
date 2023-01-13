@@ -86,17 +86,15 @@ function Timer() {
                     <div id="timer-count">
                         <span>{hours}</span>hrs <span>{minutes}</span>mins <span>{seconds}</span>secs
                     </div>
-                    {/* <p>{isRunning ? 'Running' : 'Not Running'}</p> */}
                     <div id="timer-count-buttons">
                         {
-                            // isRunning ? <Button variant="contained" onClick={pause}>Pause</Button> : <Button variant="contained" onClick={start}>Start</Button>
-                            isRunning ? <CustomButton colour="red" title="Pause" onClick={pause} /> : <CustomButton colour="green" title="Start" onClick={start} />
+                            isRunning ? <CustomButton colour="red" title="Pause" onClick={pause} isTapped={true}/> : <CustomButton colour="green" title="Start" onClick={start} isTapped={true} />
                         }
-                        {/* <Button variant="contained" onClick={reset} color="secondary">Reset</Button> */}
                         <CustomButton
                             title="Reset"
                             onClick={reset}
                             colour="reset"
+                            isTapped={true}
                         />
                     </div>
                 </div>
@@ -124,11 +122,11 @@ function Timer() {
                             </label>
                         </div>
                     </div>
-                    {/* <Button type="submit" variant="contained">Submit</Button> */}
                     <CustomButton
                         isSubmit={true}
                         title="Submit"
-                        colour="red"
+                        colour="submit"
+                        isTapped={true}
                     />
                 </div>
             </form>
