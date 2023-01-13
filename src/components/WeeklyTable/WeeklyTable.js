@@ -27,7 +27,7 @@ function preventDefault(event) {
 export default function WeeklyTable() {
     const [rows, setRows] = useState([]);
     const [disable, setDisable] = useState([{0: null}]);
-    const [change, setChange] = useState([{}]);
+    const [change, setChange] = useState([]);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [page, setPage] = useState(0);
     useEffect(() => {
@@ -35,27 +35,25 @@ export default function WeeklyTable() {
     }, [])
     const fetchData = async () => {
         Axios.get("http://localhost:3001/tasks/get").then((response) => {
+            var res = response;
+            // Sort Date data in order
+            res.data.sort((a, b) => new Date(a.date) - new Date(b.date))
             setRows(response["data"]);
         })
     }
 
     const handleEdit = (event, row) => {
+        console.log(rows)
         if (disable[row.id] == true) {
-            // When Cancel is clicked
             console.log("Edit => noEdit")
-            console.log("data: ", row.data)
             const index = row.id - rows[0].task_id;
-            console.log("original: ", rows[index])
-            // Check if there's any changes between row.data and rows[row.id]
         } else {
-            // When Edit is clicked
             console.log("noEdit => Edit")
         }
         setDisable({
             ...disable,
             [row.id]: row.value
         })
-        console.log(disable)
     }
     const handleDelete = (event, row) => {
         if (window.confirm("Do you want to delete the task \"" + row.task_name + "\"?")) {
@@ -67,9 +65,7 @@ export default function WeeklyTable() {
                 console.log(response);
             })
             const newRows = rows;
-            console.log("oldRows: ", rows)
             newRows.splice(rows.indexOf(row), 1);
-            console.log("newRows: ", newRows)
             setRows(newRows);
             console.log("successfully deleted a task");
         } else {
@@ -78,19 +74,18 @@ export default function WeeklyTable() {
     }
 
     const handleSave = (event, row, value) => {
-        console.log("Save ", row.task_name)
-        // Check change and row's information
-        console.log(row.id);
+        console.log("change => ", change[row.id])
         const index = row.id - rows[0].task_id;
-        if (change[row.id] !== undefined) {
-            if (change[row.id].isFinished !== rows[index].isFinished) {
-                var newRows = rows
-                if (newRows[index].is_finished === "progress") {
-                    newRows[index].is_finished = "finished"
-                } else {
-                    newRows[index].is_finished = "progress"
+        if (window.confirm("Do you want to save the changes?")) {
+            if (change[row.id]) {
+                if (change[row.id].isFinished !== rows[index].isFinished) {
+                    Axios.post('http://localhost:3001/tasks/update', {
+                        taskId: row.id,
+                        isFinished: change[row.id].isFinished,
+                    }).then((response) => {
+                        console.log(response);
+                    })
                 }
-                setRows(newRows)
             }
         }
     }
@@ -152,17 +147,28 @@ export default function WeeklyTable() {
                                             onClick={(event) => {
                                                 const index = row.task_id - rows[0].task_id;
                                                 var value = ""
-                                                if (rows[index].is_finished === "progress") {
-                                                    value = "finished"
+                                                if (change[index]) {
+                                                    console.log("a")
+                                                    if (change[index] === "progress") {
+                                                        value = "finished";
+                                                    } else {
+                                                        value = "progress";
+                                                    }
                                                 } else {
-                                                    value = "progress"
-                                                }
+                                                    console.log("b")
+                                                    if (rows[index].is_finished === "progress") {
+                                                        value = "finished"
+                                                    } else {
+                                                        value = "progress"
+                                                    }
+                                                }                                                                                                
                                                 setChange({
                                                     ...change,
                                                     [row.task_id]: {
                                                         "isFinished": value
                                                     }
                                                 })
+                                                console.log("this is change: ", change)
                                             }}
                                         /> 
                                     </TableCell>
