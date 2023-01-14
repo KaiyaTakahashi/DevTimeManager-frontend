@@ -61,7 +61,7 @@ function Timer() {
         /* Insert task into weekly_tasks */
         Axios.post("http://localhost:3001/weekly_tasks/insert", {
             date: today,
-            value: hours + Math.floor(minutes / 60),
+            value: hours + Math.round((minutes / 60) * 10) / 10,
         }).then((response) => {
             console.log("Task is stored in weekly_tasks")
             console.log(response);

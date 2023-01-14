@@ -6,7 +6,6 @@ import {
     Paper,
     TableBody,
     Table,
-    Link,
     TablePagination
 } from '@mui/material';
 
@@ -43,13 +42,6 @@ export default function WeeklyTable() {
     }
 
     const handleEdit = (event, row) => {
-        console.log(rows)
-        if (disable[row.id] == true) {
-            console.log("Edit => noEdit")
-            const index = row.id - rows[0].task_id;
-        } else {
-            console.log("noEdit => Edit")
-        }
         setDisable({
             ...disable,
             [row.id]: row.value
@@ -62,19 +54,17 @@ export default function WeeklyTable() {
                     id: row.task_id,
                 }
             }).then((response) => {
-                console.log(response);
             })
             const newRows = rows;
             newRows.splice(rows.indexOf(row), 1);
             setRows(newRows);
-            console.log("successfully deleted a task");
+            // console.log("successfully deleted a task");
         } else {
-            console.log("deletion canceled");
+            // console.log("deletion canceled");
         }
     }
 
     const handleSave = (event, row, value) => {
-        console.log("change => ", change[row.id])
         const index = row.id - rows[0].task_id;
         if (window.confirm("Do you want to save the changes?")) {
             if (change[row.id]) {
@@ -83,25 +73,10 @@ export default function WeeklyTable() {
                         taskId: row.id,
                         isFinished: change[row.id].isFinished,
                     }).then((response) => {
-                        console.log(response);
                     })
                 }
             }
         }
-    }
-
-    const handleIsFinished = (event, row) => {
-        // const firstIndex = rows[0].task_id;
-        // const index = row.id - firstIndex;
-        // var newRows = rows
-        // if (newRows[index].is_finished === "progress") {
-        //     newRows[index].is_finished = "finished"
-        // } else {
-        //     newRows[index].is_finished = "progress"
-        // }
-        // console.log("newRows: ", newRows)
-        // console.log("changedRowTask: ", index)
-        // setRows(newRows)
     }
 
     const handleChangePage = (event, newPage) => {
@@ -110,7 +85,6 @@ export default function WeeklyTable() {
 
     const handleChangeRowsPerPage = (event) => {
         setRowsPerPage(+event.target.value);
-        console.log("pagina: ", rowsPerPage)
         setPage(0);
     }
 
@@ -141,21 +115,18 @@ export default function WeeklyTable() {
                                     <TableCell>
                                         <input
                                             type="checkbox"
-                                            // checked={row["is_finished"] === "finished"}
                                             defaultChecked={row["is_finished"] === "finished"}
                                             disabled={!disable[row.task_id]}
                                             onClick={(event) => {
                                                 const index = row.task_id - rows[0].task_id;
                                                 var value = ""
                                                 if (change[index]) {
-                                                    console.log("a")
                                                     if (change[index] === "progress") {
                                                         value = "finished";
                                                     } else {
                                                         value = "progress";
                                                     }
                                                 } else {
-                                                    console.log("b")
                                                     if (rows[index].is_finished === "progress") {
                                                         value = "finished"
                                                     } else {
@@ -168,7 +139,6 @@ export default function WeeklyTable() {
                                                         "isFinished": value
                                                     }
                                                 })
-                                                console.log("this is change: ", change)
                                             }}
                                         /> 
                                     </TableCell>
@@ -236,9 +206,6 @@ export default function WeeklyTable() {
                         onRowsPerPageChange={handleChangeRowsPerPage}
                     />
                     </Paper>
-                    {/* <Link color={"primary"} href="#" onClick={preventDefault} sx={{ mt: 3}}>
-                        See more tasks
-                    </Link> */}
                 </React.Fragment>
                 </div>
         </div>

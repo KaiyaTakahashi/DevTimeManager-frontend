@@ -27,22 +27,19 @@ export default function WeeklyColumn() {
   function handleRange(days) {
     var today = new Date();
     var filteredData = [];
-    console.log("data: ",data)
     var index = data.length - 1;
     for (let i = 0; i < days; i ++) {
       const month = today.getMonth() < 9 ? "0" + (today.getMonth() + 1) : (today.getMonth() + 1);
       const date = (month + "-" + today.toDateString().substring(8, 10));
-      var totalValue = 0;
+      var totalValue = 0.0;
       while (index >= 0 && data[index].date == date) {
-        totalValue += data[index].value;
+        totalValue += parseFloat(data[index].value);
         index -= 1;
       }
       filteredData.splice(0, 0, {date: date, value: totalValue});
       today.setDate(today.getDate() - 1);
     }
     const t = new Date()
-    console.log(t.toLocaleDateString())
-    console.log(filteredData);
     setDisplayData(filteredData);
   }
 
@@ -50,14 +47,12 @@ export default function WeeklyColumn() {
     Axios.get("http://localhost:3001/weekly_tasks/get").then((response) => {
       var newData = [];
       var index = 0;
-      console.log(response.data)
       while (index < response.data.length) {
         newData.push({ date: response.data[index].date.substring(5, 10), value: response.data[index].value })
         index += 1;
       }
       setDisplayData(newData)
       setData(newData);
-      console.log("whole data: ", data);
     })
   }
   useEffect(() => {
