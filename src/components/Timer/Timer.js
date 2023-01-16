@@ -47,23 +47,24 @@ function Timer() {
             console.log("User is not logged in, but created task in a database");
             window.alert("Task was saved")
         }
-        today.setDate(today.getDate() - 1);
         /* Insert task into database */
         Axios.post("http://localhost:3001/tasks/insert", {
             taskName: data.task,
+            time: hours + ":" + minutes + ":" + seconds,
             isFinished: data.isFinished,
             date: today,
-            time: hours + ":" + minutes + ":" + seconds,
+            email: localStorage.getItem("email"),
         }).then((response) => {
             console.log("Task is stored in tasks")
             console.log(response);
         })
-        /* Insert task into weekly_tasks */
-        Axios.post("http://localhost:3001/weekly_tasks/insert", {
+        /* Insert task into progress_tasks */
+        Axios.post("http://localhost:3001/progress_tasks/insert", {
             date: today,
             value: hours + Math.round((minutes / 60) * 10) / 10,
+            email: localStorage.getItem("email"),
         }).then((response) => {
-            console.log("Task is stored in weekly_tasks")
+            console.log("Task is stored in progress_tasks")
             console.log(response);
         })
     }

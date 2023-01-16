@@ -67,6 +67,7 @@ function Header() {
             setLoginData("true");
             setImageUrl(createImage(decoded.picture));
             localStorage.setItem("imageUrl", decoded.picture);
+            localStorage.setItem("email", decoded.email);
         }).catch((err) => {
             console.log(err.message);
             localStorage.setItem("isLoggedin", false);

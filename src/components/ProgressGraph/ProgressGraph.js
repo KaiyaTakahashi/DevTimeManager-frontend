@@ -30,7 +30,7 @@ export default function WeeklyColumn() {
     var index = data.length - 1;
     for (let i = 0; i < days; i ++) {
       const month = today.getMonth() < 9 ? "0" + (today.getMonth() + 1) : (today.getMonth() + 1);
-      const date = (month + "-" + today.toDateString().substring(8, 10));
+      const date = (today.toDateString().substring(8, 10) + "/" + month);
       var totalValue = 0.0;
       while (index >= 0 && data[index].date == date) {
         totalValue += parseFloat(data[index].value);
@@ -39,20 +39,28 @@ export default function WeeklyColumn() {
       filteredData.splice(0, 0, {date: date, value: totalValue});
       today.setDate(today.getDate() - 1);
     }
-    const t = new Date()
     setDisplayData(filteredData);
   }
 
   const fetchData = async () => {
-    Axios.get("http://localhost:3001/weekly_tasks/get").then((response) => {
+    Axios.get("http://localhost:3001/progress_tasks/get", {
+      params: {
+        email: localStorage.getItem("email")
+    }
+    }).then((response) => {
       var newData = [];
       var index = 0;
-      while (index < response.data.length) {
-        newData.push({ date: response.data[index].date.substring(5, 10), value: response.data[index].value })
+      var res = response.data;
+      res.sort((a, b) => new Date(a.date) - new Date(b.date));
+      res.map((item) => {
+        item.date = new Date(item.date).toLocaleDateString();
+      })
+      while (index < res.length) {
+        newData.push({ date: res[index].date.substring(0, 5), value: res[index].value })
         index += 1;
       }
-      setDisplayData(newData)
       setData(newData);
+      setDisplayData(newData)
     })
   }
   useEffect(() => {

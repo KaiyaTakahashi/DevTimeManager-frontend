@@ -7,9 +7,9 @@ const clientId = "985770492377-a2nlp1h94mi7s7v861khiturmfqs9gsm.apps.googleuserc
 
 var Login = () => {
     const onSuccess = (res) => {
-        console.log("Login successfull! current user: ", res);
+        console.log("Login successfull! current user: ", res.profileObj.imageUrl);
         localStorage.setItem("isLoggedin", true);
-        localStorage.setItem("imageUrl", res.profileObj.imageUrl)
+        localStorage.setItem("imageUrl", res.profileObj.imageUrl);
         Axios.post('http://localhost:3001/api/create_tokens', res).then((response) => {
             console.log("This is response", response);
         }).catch((err) => {

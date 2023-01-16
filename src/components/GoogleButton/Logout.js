@@ -13,6 +13,7 @@ var Logout = () => {
                 console.log("Log out successfull")
                 localStorage.setItem("isLoggedin", false);
                 localStorage.setItem("imageUrl", null);
+                localStorage.setItem("email", null);
                 window.location.reload();
             }}
         />

@@ -198,18 +198,16 @@
     }
 }
 
-@media (max-width: 390px) {
-
+@media (max-width: 414px) {
+    /* Title */
+    #title {
+        font-size: var(--fs-h4);
+    }
 }
 
 @media (max-width: 375px) {
     #timer-div {
         margin-top: 50px;
-    }
-    
-    /* Title */
-    #title {
-        font-size: var(--fs-h4);
     }
 
     /* Header */

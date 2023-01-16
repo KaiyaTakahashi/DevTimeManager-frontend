@@ -29,11 +29,21 @@ export default function WeeklyTable() {
     const [change, setChange] = useState([]);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [page, setPage] = useState(0);
+    const [email, setEmail] = useState(
+        localStorage.getItem("email") ?
+        localStorage.getItem("email"):
+        ""
+    )
     useEffect(() => {
-        fetchData()
+        fetchData();
+        console.log(email)
     }, [])
     const fetchData = async () => {
-        Axios.get("http://localhost:3001/tasks/get").then((response) => {
+        Axios.get("http://localhost:3001/tasks/get", {
+            params: {
+                email: localStorage.getItem("email")
+            }
+        }).then((response) => {
             var res = response;
             // Sort Date data in order
             res.data.sort((a, b) => new Date(a.date) - new Date(b.date))
