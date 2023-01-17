@@ -77,7 +77,7 @@ export default function WeeklyTable() {
             }
         }
         if (change[row.id] && change[row.id].isFinished !== rows[taskIndex]["is_finished"]) {
-            if (window.confirm("Do you want to save the changes?")) {
+            if (window.confirm("Do you want to save the change?")) {
                 Axios.post('http://localhost:3001/tasks/update', {
                     taskId: row.id,
                     isFinished: change[row.id].isFinished,
@@ -121,7 +121,7 @@ export default function WeeklyTable() {
                                 <TableRow>
                                     <TableCell>{row["task_name"]}</TableCell>
                                     <TableCell>{row.time}</TableCell>
-                                    <TableCell>{row.date.substring(5, 10)}</TableCell>
+                                    <TableCell>{new Date(row.date).toLocaleString().substring(0, 5)}</TableCell>
                                     <TableCell>
                                         <input
                                             type="checkbox"

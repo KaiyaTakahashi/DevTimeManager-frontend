@@ -102,7 +102,7 @@ function Header() {
       <AppBar position="fixed" style={{ background: '#ffff'}}>
         <Toolbar>
           <img src={logo} width="50px" id='logo'></img>
-          <Typography id='title' variant="h4" component="div" sx={{ flexGrow: 1 }} color="black">
+          <Typography id='title' variant="h4" component="div" sx={{ flexGrow: 1 }} color="black" onClick={() => { window.location.reload() }} style={{ cursor: "pointer" }}>
             DEV TIME MANAGER
           </Typography>
           <Typography id='hello-user' color='black' style={{ marginRight: "10px" }}>

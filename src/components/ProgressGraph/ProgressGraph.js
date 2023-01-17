@@ -60,7 +60,7 @@ export default function WeeklyColumn() {
         index += 1;
       }
       setData(newData);
-      setDisplayData(newData)
+      setDisplayData(newData);
     })
   }
   useEffect(() => {
