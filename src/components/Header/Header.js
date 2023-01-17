@@ -36,6 +36,11 @@ function Header() {
     ? createImage(localStorage.getItem("imageUrl"))
     : null
   )
+  const [name, setName] = useState(
+    localStorage.getItem("name") ?
+    localStorage.getItem("name"):
+    "user"
+  )
 
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -61,13 +66,15 @@ function Header() {
   var Login = () => {
     const onSuccess = (res) => {
         localStorage.setItem("isLoggedin", true);
-        setLoginData("true");
         Axios.post('http://localhost:3001/api/create_tokens', res).then((response) => {
             const decoded = jwt_decode(response.data.id_token);
             setLoginData("true");
             setImageUrl(createImage(decoded.picture));
+            setName(decoded.given_name);
             localStorage.setItem("imageUrl", decoded.picture);
             localStorage.setItem("email", decoded.email);
+            localStorage.setItem("name", decoded.given_name);
+            window.location.reload();
         }).catch((err) => {
             console.log(err.message);
             localStorage.setItem("isLoggedin", false);
@@ -94,9 +101,12 @@ function Header() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed" style={{ background: '#ffff'}}>
         <Toolbar>
-          <img src={logo} width="50px"></img>
+          <img src={logo} width="50px" id='logo'></img>
           <Typography id='title' variant="h4" component="div" sx={{ flexGrow: 1 }} color="black">
             DEV TIME MANAGER
+          </Typography>
+          <Typography id='hello-user' color='black' style={{ marginRight: "10px" }}>
+            Hello, { name }
           </Typography>
           <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
             <Avatar src={imageUrl.src}/>

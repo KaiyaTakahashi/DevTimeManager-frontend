@@ -17,6 +17,7 @@
     --fs-h2: 2.25rem;
     --fs-h3: 2rem;
     --fs-h4: 1.5rem;
+    --fs-head: 20px;
     --fs-body: 1rem;
 
     --imgs: 250px;
@@ -36,6 +37,10 @@
 
 .section-title {
     color: var(--clr-section-title);
+}
+
+#hello-user {
+    font-size: var(--fs-body);
 }
 
 /* Home View */
@@ -196,12 +201,27 @@
         flex-direction: column;
         row-gap: 50px;
     }
+
+    #title {
+        font-size: var(--fs-head);
+    }
+
+    #hello-user {
+        font-size: var(--fs-body);
+    }
 }
 
 @media (max-width: 414px) {
     /* Title */
+    #logo {
+        width: 35px;
+    }
+
     #title {
-        font-size: var(--fs-h4);
+        font-size: var(--fs-body);
+    }
+    #hello-user {
+        font-size: 10px;
     }
 }
 

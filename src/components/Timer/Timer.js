@@ -2,8 +2,7 @@ import React, { useState } from "react"
 import "/Users/kaiyatakahashi/Desktop/DevTimeManager/client/src/styles/components.css"
 import { useStopwatch } from 'react-timer-hook';
 import { useForm } from 'react-hook-form';
-import TextField from '@mui/material/TextField'
-import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 import CustomButton from "../Button/Button";
 import Axios from 'axios';
 
@@ -37,36 +36,38 @@ function Timer() {
                     location: "",
                     startDateTime: today.createStartDate(hours, minutes, days),
                     endDateTime: today,
+                    email: localStorage.getItem("email"),
                 }).then((response) => {
                     console.log(response.data);
                 })
             } else {
                 console.log("Event wasn't created");
             }
+
+            /* Insert task into database */
+            Axios.post("http://localhost:3001/tasks/insert", {
+                taskName: data.task,
+                time: hours + ":" + minutes + ":" + seconds,
+                isFinished: data.isFinished,
+                date: today,
+                email: localStorage.getItem("email"),
+            }).then((response) => {
+                console.log("Task is stored in tasks")
+                console.log(response);
+            })
+            /* Insert task into progress_tasks */
+            Axios.post("http://localhost:3001/progress_tasks/insert", {
+                date: today,
+                value: hours + Math.round((minutes / 60) * 10) / 10,
+                email: localStorage.getItem("email"),
+            }).then((response) => {
+                console.log("Task is stored in progress_tasks")
+                console.log(response);
+            })
+            window.location.reload();
         } else {
-            console.log("User is not logged in, but created task in a database");
-            window.alert("Task was saved")
+            window.alert("Please login before you submit a task.")
         }
-        /* Insert task into database */
-        Axios.post("http://localhost:3001/tasks/insert", {
-            taskName: data.task,
-            time: hours + ":" + minutes + ":" + seconds,
-            isFinished: data.isFinished,
-            date: today,
-            email: localStorage.getItem("email"),
-        }).then((response) => {
-            console.log("Task is stored in tasks")
-            console.log(response);
-        })
-        /* Insert task into progress_tasks */
-        Axios.post("http://localhost:3001/progress_tasks/insert", {
-            date: today,
-            value: hours + Math.round((minutes / 60) * 10) / 10,
-            email: localStorage.getItem("email"),
-        }).then((response) => {
-            console.log("Task is stored in progress_tasks")
-            console.log(response);
-        })
     }
     return (
         <div id="timer-div">

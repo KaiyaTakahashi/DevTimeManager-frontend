@@ -14,6 +14,7 @@ var Logout = () => {
                 localStorage.setItem("isLoggedin", false);
                 localStorage.setItem("imageUrl", null);
                 localStorage.setItem("email", null);
+                localStorage.setItem("name", "user");
                 window.location.reload();
             }}
         />

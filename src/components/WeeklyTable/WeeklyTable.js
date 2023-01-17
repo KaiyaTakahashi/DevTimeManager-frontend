@@ -29,14 +29,9 @@ export default function WeeklyTable() {
     const [change, setChange] = useState([]);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [page, setPage] = useState(0);
-    const [email, setEmail] = useState(
-        localStorage.getItem("email") ?
-        localStorage.getItem("email"):
-        ""
-    )
+
     useEffect(() => {
         fetchData();
-        console.log(email)
     }, [])
     const fetchData = async () => {
         Axios.get("http://localhost:3001/tasks/get", {
@@ -46,7 +41,7 @@ export default function WeeklyTable() {
         }).then((response) => {
             var res = response;
             // Sort Date data in order
-            res.data.sort((a, b) => new Date(a.date) - new Date(b.date))
+            res.data.sort((a, b) => new Date(b.date) - new Date(a.date))
             setRows(response["data"]);
         })
     }
@@ -75,17 +70,22 @@ export default function WeeklyTable() {
     }
 
     const handleSave = (event, row, value) => {
-        const index = row.id - rows[0].task_id;
-        if (window.confirm("Do you want to save the changes?")) {
-            if (change[row.id]) {
-                if (change[row.id].isFinished !== rows[index].isFinished) {
-                    Axios.post('http://localhost:3001/tasks/update', {
-                        taskId: row.id,
-                        isFinished: change[row.id].isFinished,
-                    }).then((response) => {
-                    })
-                }
+        var taskIndex = 0;
+        for (let i = 0; i < rows.length; i++) {
+            if (row.id === rows[i].task_id) {
+                taskIndex = i;
             }
+        }
+        if (change[row.id] && change[row.id].isFinished !== rows[taskIndex]["is_finished"]) {
+            if (window.confirm("Do you want to save the changes?")) {
+                Axios.post('http://localhost:3001/tasks/update', {
+                    taskId: row.id,
+                    isFinished: change[row.id].isFinished,
+                }).then((response) => {
+                })
+            }
+        } else {
+            window.alert("There is nothing to update.");
         }
     }
 
@@ -128,10 +128,15 @@ export default function WeeklyTable() {
                                             defaultChecked={row["is_finished"] === "finished"}
                                             disabled={!disable[row.task_id]}
                                             onClick={(event) => {
-                                                const index = row.task_id - rows[0].task_id;
+                                                var index = 0;
+                                                for (let i = 0; i < rows.length; i++) {
+                                                    if (row.task_id === rows[i].task_id) {
+                                                        index = i;
+                                                    }
+                                                }
                                                 var value = ""
-                                                if (change[index]) {
-                                                    if (change[index] === "progress") {
+                                                if (change[row.task_id]) {
+                                                    if (change[row.task_id].isFinished === "progress") {
                                                         value = "finished";
                                                     } else {
                                                         value = "progress";
