@@ -43,7 +43,7 @@ export default function WeeklyColumn() {
   }
 
   const fetchData = async () => {
-    Axios.get("http://localhost:3001/progress_tasks/get", {
+    Axios.get("http://localhost:3001/get/progress_tasks", {
       params: {
         email: localStorage.getItem("email")
     }

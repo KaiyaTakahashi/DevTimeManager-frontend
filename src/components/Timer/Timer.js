@@ -45,7 +45,7 @@ function Timer() {
             }
 
             /* Insert task into database */
-            Axios.post("http://localhost:3001/tasks/insert", {
+            Axios.post("http://localhost:3001/insert/tasks", {
                 taskName: data.task,
                 time: hours + ":" + minutes + ":" + seconds,
                 isFinished: data.isFinished,
@@ -56,7 +56,7 @@ function Timer() {
                 console.log(response);
             })
             /* Insert task into progress_tasks */
-            Axios.post("http://localhost:3001/progress_tasks/insert", {
+            Axios.post("http://localhost:3001/insert/progress_tasks", {
                 date: today,
                 value: hours + Math.round((minutes / 60) * 10) / 10,
                 email: localStorage.getItem("email"),
