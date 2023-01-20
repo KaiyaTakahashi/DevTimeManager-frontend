@@ -1,5 +1,5 @@
 import React from "react"
-import "/Users/kaiyatakahashi/Desktop/DevTimeManager/client/src/styles/components.css"
+import "../../styles/components.css";
 import { useStopwatch } from 'react-timer-hook';
 import { useForm } from 'react-hook-form';
 import TextField from '@mui/material/TextField';

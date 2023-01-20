@@ -15,9 +15,6 @@ import Axios from 'axios';
 
 Axios.defaults.withCredentials = true
 
-// Should be in env file
-// const clientId = "985770492377-a2nlp1h94mi7s7v861khiturmfqs9gsm.apps.googleusercontent.com";
-
 function Header() {
   const createImage = (src) => {
     const image = new Image(50, 50);
