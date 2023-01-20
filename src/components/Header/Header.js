@@ -16,7 +16,7 @@ import Axios from 'axios';
 Axios.defaults.withCredentials = true
 
 // Should be in env file
-const clientId = "985770492377-a2nlp1h94mi7s7v861khiturmfqs9gsm.apps.googleusercontent.com";
+// const clientId = "985770492377-a2nlp1h94mi7s7v861khiturmfqs9gsm.apps.googleusercontent.com";
 
 function Header() {
   const createImage = (src) => {
@@ -55,7 +55,7 @@ function Header() {
   useEffect(() => {
     function start() {
       gapi.client.init({
-        clientId: clientId,
+        clientId: process.env.REACT_APP_CLIENT_ID,
         scope: "openid email profile https://www.googleapis.com/auth/calendar",
       })
     }
@@ -66,7 +66,7 @@ function Header() {
   var Login = () => {
     const onSuccess = (res) => {
         localStorage.setItem("isLoggedin", true);
-        Axios.post('http://localhost:3001/api/create_tokens', res).then((response) => {
+        Axios.post('http://localhost:3001/users/insert', res).then((response) => {
             const decoded = jwt_decode(response.data.id_token);
             setLoginData("true");
             setImageUrl(createImage(decoded.picture));
@@ -83,7 +83,7 @@ function Header() {
 
     return (
         <GoogleLogin
-            clientId={clientId}
+            clientId={process.env.REACT_APP_CLIENT_ID}
             onSuccess={onSuccess}
             onFailure={(res) => {console.log("Log in failed", res)}}
             buttonText={"Login"}

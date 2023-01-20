@@ -1,25 +1,13 @@
 import * as React from 'react';
-import { useTheme } from '@mui/material/styles';
 import { ResponsiveContainer, AreaChart, XAxis, YAxis, Area, Tooltip, CartesianGrid } from 'recharts';
 import { useState, useEffect } from 'react';
 import Axios from 'axios';
-import { Paper, chart } from '@mui/material';
+import { Paper } from '@mui/material';
 import Button from '../Button/Button';
 
 Axios.defaults.withCredentials = true;
 
-const dataa = [
-  {date: 'Sun', value: 0},
-  {date: 'Mon', value: 300},
-  {date: 'Tue', value: 600},
-  {date: 'Wed', value: 800},
-  {date: 'Thu', value: 1500},
-  {date: 'Fri', value: 2000},
-  {date: 'Sat', value: 2400},
-];
-
 export default function WeeklyColumn() {
-  const theme = useTheme();
   const [data, setData] = useState();
   const [dispayData, setDisplayData] = useState(data);
   const [range, setRange] = useState("");
@@ -32,7 +20,7 @@ export default function WeeklyColumn() {
       const month = today.getMonth() < 9 ? "0" + (today.getMonth() + 1) : (today.getMonth() + 1);
       const date = (today.toDateString().substring(8, 10) + "/" + month);
       var totalValue = 0.0;
-      while (index >= 0 && data[index].date == date) {
+      while (index >= 0 && data[index].date === date) {
         totalValue += parseFloat(data[index].value);
         index -= 1;
       }
@@ -43,7 +31,7 @@ export default function WeeklyColumn() {
   }
 
   const fetchData = async () => {
-    Axios.get("http://localhost:3001/get/progress_tasks", {
+    Axios.get("http://localhost:3001/progress_tasks/get", {
       params: {
         email: localStorage.getItem("email")
     }

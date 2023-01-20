@@ -19,10 +19,6 @@ import SaveAltIcon from '@mui/icons-material/SaveAlt';
 
 Axios.defaults.withCredentials = true;
 
-function preventDefault(event) {
-    event.preventDefault();
-}
-
 export default function WeeklyTable() {
     const [rows, setRows] = useState([]);
     const [disable, setDisable] = useState([{0: null}]);
@@ -34,7 +30,7 @@ export default function WeeklyTable() {
         fetchData();
     }, [])
     const fetchData = async () => {
-        Axios.get("http://localhost:3001/get/tasks", {
+        Axios.get("http://localhost:3001/tasks/get", {
             params: {
                 email: localStorage.getItem("email")
             }
@@ -54,18 +50,14 @@ export default function WeeklyTable() {
     }
     const handleDelete = (event, row) => {
         if (window.confirm("Do you want to delete the task \"" + row.task_name + "\"?")) {
-            Axios.delete("http://localhost:3001/delete", {
+            Axios.delete("http://localhost:3001/tasks/delete", {
                 data: {
                     id: row.task_id,
                 }
             }).then((response) => {
             })
-            const newRows = rows;
-            newRows.splice(rows.indexOf(row), 1);
-            setRows(newRows);
-            // console.log("successfully deleted a task");
+            fetchData();
         } else {
-            // console.log("deletion canceled");
         }
     }
 
@@ -78,7 +70,7 @@ export default function WeeklyTable() {
         }
         if (change[row.id] && change[row.id].isFinished !== rows[taskIndex]["is_finished"]) {
             if (window.confirm("Do you want to save the change?")) {
-                Axios.post('http://localhost:3001/update/tasks', {
+                Axios.post('http://localhost:3001/tasks/update', {
                     taskId: row.id,
                     isFinished: change[row.id].isFinished,
                 }).then((response) => {
@@ -118,7 +110,10 @@ export default function WeeklyTable() {
                         </TableHead>
                         <TableBody>
                             {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => (
-                                <TableRow>
+                                <TableRow
+                                    tabIndex={row.id}
+                                    key={row.task_id}
+                                >
                                     <TableCell>{row["task_name"]}</TableCell>
                                     <TableCell>{row.time}</TableCell>
                                     <TableCell>{new Date(row.date).toLocaleString().substring(0, 5)}</TableCell>

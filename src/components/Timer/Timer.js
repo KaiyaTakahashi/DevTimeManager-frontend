@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import "/Users/kaiyatakahashi/Desktop/DevTimeManager/client/src/styles/components.css"
 import { useStopwatch } from 'react-timer-hook';
 import { useForm } from 'react-hook-form';
@@ -23,14 +23,14 @@ function Timer() {
         pause,
         reset,
     } = useStopwatch({ autoStart: false });
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit } = useForm();
     const onSubmit = (data) => {
         const today = new Date();
         if (localStorage.getItem("isLoggedin") === "true") {
             if (window.confirm("Do you want to push this event to google calendar?")) {
                 // Create an event
                 console.log("Event was created");
-                Axios.post('http://localhost:3001/create_event', {
+                Axios.post('http://localhost:3001/users/create_event', {
                     summary: data.task,
                     description: "",
                     location: "",
@@ -43,28 +43,29 @@ function Timer() {
             } else {
                 console.log("Event wasn't created");
             }
-
-            /* Insert task into database */
-            Axios.post("http://localhost:3001/insert/tasks", {
-                taskName: data.task,
-                time: hours + ":" + minutes + ":" + seconds,
-                isFinished: data.isFinished,
-                date: today,
-                email: localStorage.getItem("email"),
-            }).then((response) => {
-                console.log("Task is stored in tasks")
-                console.log(response);
-            })
-            /* Insert task into progress_tasks */
-            Axios.post("http://localhost:3001/insert/progress_tasks", {
-                date: today,
-                value: hours + Math.round((minutes / 60) * 10) / 10,
-                email: localStorage.getItem("email"),
-            }).then((response) => {
-                console.log("Task is stored in progress_tasks")
-                console.log(response);
-            })
-            window.location.reload();
+            if (window.confirm("Do you want to save this task?")) {
+                /* Insert task into database */
+                Axios.post("http://localhost:3001/tasks/insert", {
+                    taskName: data.task,
+                    time: hours + ":" + minutes + ":" + seconds,
+                    isFinished: data.isFinished,
+                    date: today,
+                    email: localStorage.getItem("email"),
+                }).then((response) => {
+                    console.log("Task is stored in tasks")
+                    console.log(response);
+                })
+                /* Insert task into progress_tasks */
+                Axios.post("http://localhost:3001/progress_tasks/insert", {
+                    date: today,
+                    value: hours + Math.round((minutes / 60) * 10) / 10,
+                    email: localStorage.getItem("email"),
+                }).then((response) => {
+                    console.log("Task is stored in progress_tasks")
+                    console.log(response);
+                })
+                window.location.reload();
+            }
         } else {
             window.alert("Please login before you submit a task.")
         }
