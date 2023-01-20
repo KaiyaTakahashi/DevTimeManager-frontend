@@ -30,7 +30,7 @@ export default function WeeklyTable() {
         fetchData();
     }, [])
     const fetchData = async () => {
-        Axios.get("http://localhost:3001/tasks/get", {
+        Axios.get("/tasks/get", {
             params: {
                 email: localStorage.getItem("email")
             }
@@ -50,7 +50,7 @@ export default function WeeklyTable() {
     }
     const handleDelete = (event, row) => {
         if (window.confirm("Do you want to delete the task \"" + row.task_name + "\"?")) {
-            Axios.delete("http://localhost:3001/tasks/delete", {
+            Axios.delete("/tasks/delete", {
                 data: {
                     id: row.task_id,
                 }
@@ -70,7 +70,7 @@ export default function WeeklyTable() {
         }
         if (change[row.id] && change[row.id].isFinished !== rows[taskIndex]["is_finished"]) {
             if (window.confirm("Do you want to save the change?")) {
-                Axios.post('http://localhost:3001/tasks/update', {
+                Axios.post('/tasks/update', {
                     taskId: row.id,
                     isFinished: change[row.id].isFinished,
                 }).then((response) => {

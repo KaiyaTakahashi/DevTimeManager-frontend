@@ -63,7 +63,7 @@ function Header() {
   var Login = () => {
     const onSuccess = (res) => {
         localStorage.setItem("isLoggedin", true);
-        Axios.post('http://localhost:3001/users/insert', res).then((response) => {
+        Axios.post('/users/insert', res).then((response) => {
             const decoded = jwt_decode(response.data.id_token);
             setLoginData("true");
             setImageUrl(createImage(decoded.picture));

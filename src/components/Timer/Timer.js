@@ -30,7 +30,7 @@ function Timer() {
             if (window.confirm("Do you want to push this event to google calendar?")) {
                 // Create an event
                 console.log("Event was created");
-                Axios.post('http://localhost:3001/users/create_event', {
+                Axios.post('/users/create_event', {
                     summary: data.task,
                     description: "",
                     location: "",
@@ -45,7 +45,7 @@ function Timer() {
             }
             if (window.confirm("Do you want to save this task?")) {
                 /* Insert task into database */
-                Axios.post("http://localhost:3001/tasks/insert", {
+                Axios.post("/tasks/insert", {
                     taskName: data.task,
                     time: hours + ":" + minutes + ":" + seconds,
                     isFinished: data.isFinished,
@@ -56,7 +56,7 @@ function Timer() {
                     console.log(response);
                 })
                 /* Insert task into progress_tasks */
-                Axios.post("http://localhost:3001/progress_tasks/insert", {
+                Axios.post("/progress_tasks/insert", {
                     date: today,
                     value: hours + Math.round((minutes / 60) * 10) / 10,
                     email: localStorage.getItem("email"),
