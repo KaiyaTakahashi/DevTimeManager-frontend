@@ -16,21 +16,14 @@ import Axios from 'axios';
 Axios.defaults.withCredentials = true
 
 function Header() {
-  const createImage = (src) => {
-    const image = new Image(50, 50);
-    image.referrerPolicy = "no-referrer"
-    image.src = src;
-    return image;
-  }
-
   const [loginData, setLoginData] = useState(
     localStorage.getItem("isLoggedin")
     ? JSON.parse(localStorage.getItem('isLoggedin'))
     : null
   );
   const [imageUrl, setImageUrl] = useState(
-    localStorage.getItem("imageUrl") !== null
-    ? createImage(localStorage.getItem("imageUrl"))
+    localStorage.getItem("imageUrl") ?
+    localStorage.getItem("imageUrl")
     : null
   )
   const [name, setName] = useState(
@@ -66,7 +59,7 @@ function Header() {
         Axios.post('/users/insert', res).then((response) => {
             const decoded = jwt_decode(response.data.id_token);
             setLoginData("true");
-            setImageUrl(createImage(decoded.picture));
+            setImageUrl(decoded.picture);
             setName(decoded.given_name);
             localStorage.setItem("imageUrl", decoded.picture);
             localStorage.setItem("email", decoded.email);
@@ -106,7 +99,7 @@ function Header() {
             Hello, { name }
           </Typography>
           <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-            <Avatar src={imageUrl.src}/>
+            <Avatar src={imageUrl}/>
           </IconButton>
           <Menu
             open={Boolean(anchorElUser)}
