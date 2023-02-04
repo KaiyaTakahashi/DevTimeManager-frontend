@@ -31,25 +31,27 @@ export default function WeeklyColumn() {
   }
 
   const fetchData = async () => {
-    Axios.get("/progress_tasks/get", {
-      params: {
-        email: localStorage.getItem("email")
-    }
-    }).then((response) => {
-      var newData = [];
-      var index = 0;
-      var res = response.data;
-      res.sort((a, b) => new Date(a.date) - new Date(b.date));
-      res.map((item) => {
-        item.date = new Date(item.date).toLocaleDateString();
-      })
-      while (index < res.length) {
-        newData.push({ date: res[index].date.substring(0, 5), value: res[index].value })
-        index += 1;
+    if (localStorage.getItem("isLoggedin") && localStorage.getItem("isLoggedin") === "true") {
+      Axios.get("https://dev-time-manager-api.onrender.com/progress_tasks/get", {
+        params: {
+          email: localStorage.getItem("email")
       }
-      setData(newData);
-      setDisplayData(newData);
-    })
+      }).then((response) => {
+        var newData = [];
+        var index = 0;
+        var res = response.data;
+        res.sort((a, b) => new Date(a.date) - new Date(b.date));
+        res.map((item) => {
+          item.date = new Date(item.date).toLocaleDateString();
+        })
+        while (index < res.length) {
+          newData.push({ date: res[index].date.substring(0, 5), value: res[index].value })
+          index += 1;
+        }
+        setData(newData);
+        setDisplayData(newData);
+      })
+    }
   }
   useEffect(() => {
     fetchData()

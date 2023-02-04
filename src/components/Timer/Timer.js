@@ -29,8 +29,7 @@ function Timer() {
         if (localStorage.getItem("isLoggedin") === "true") {
             if (window.confirm("Do you want to push this event to google calendar?")) {
                 // Create an event
-                console.log("Event was created");
-                Axios.post('/users/create_event', {
+                Axios.post('https://dev-time-manager-api.onrender.com/users/create_event', {
                     summary: data.task,
                     description: "",
                     location: "",
@@ -38,14 +37,14 @@ function Timer() {
                     endDateTime: today,
                     email: localStorage.getItem("email"),
                 }).then((response) => {
-                    console.log(response.data);
+                    console.log(response);
                 })
             } else {
                 console.log("Event wasn't created");
             }
             if (window.confirm("Do you want to save this task?")) {
                 /* Insert task into database */
-                Axios.post("/tasks/insert", {
+                Axios.post("https://dev-time-manager-api.onrender.com/tasks/insert", {
                     taskName: data.task,
                     time: hours + ":" + minutes + ":" + seconds,
                     isFinished: data.isFinished,
@@ -56,7 +55,7 @@ function Timer() {
                     console.log(response);
                 })
                 /* Insert task into progress_tasks */
-                Axios.post("/progress_tasks/insert", {
+                Axios.post("https://dev-time-manager-api.onrender.com/progress_tasks/insert", {
                     date: today,
                     value: hours + Math.round((minutes / 60) * 10) / 10,
                     email: localStorage.getItem("email"),
@@ -64,7 +63,7 @@ function Timer() {
                     console.log("Task is stored in progress_tasks")
                     console.log(response);
                 })
-                window.location.reload();
+                //window.location.reload();
             }
         } else {
             window.alert("Please login before you submit a task.")

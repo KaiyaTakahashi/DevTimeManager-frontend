@@ -18,8 +18,8 @@ Axios.defaults.withCredentials = true
 function Header() {
   const [loginData, setLoginData] = useState(
     localStorage.getItem("isLoggedin")
-    ? JSON.parse(localStorage.getItem('isLoggedin'))
-    : null
+    ? localStorage.getItem('isLoggedin')
+    : "false"
   );
   const [imageUrl, setImageUrl] = useState(
     localStorage.getItem("imageUrl") ?
@@ -55,18 +55,19 @@ function Header() {
 
   var Login = () => {
     const onSuccess = (res) => {
-        localStorage.setItem("isLoggedin", true);
-        Axios.post('/users/insert', res).then((response) => {
+      console.log("Login successfully: ", res);
+        Axios.post('https://dev-time-manager-api.onrender.com/users/insert', res).then((response) => {
             const decoded = jwt_decode(response.data.id_token);
-            setLoginData("true");
             setImageUrl(decoded.picture);
             setName(decoded.given_name);
+            setLoginData("true");
+            localStorage.setItem("isLoggedin", true);
             localStorage.setItem("imageUrl", decoded.picture);
             localStorage.setItem("email", decoded.email);
             localStorage.setItem("name", decoded.given_name);
-            window.location.reload();
+            //window.location.reload();
         }).catch((err) => {
-            console.log(err.message);
+            setLoginData("false");
             localStorage.setItem("isLoggedin", false);
         })
     }
@@ -118,7 +119,7 @@ function Header() {
           >
             <MenuItem onClick={handleCloseUserMenu}>
               {
-                loginData ?
+                loginData === "true" ?
                 <Logout></Logout> :
                 <Login></Login>
               }

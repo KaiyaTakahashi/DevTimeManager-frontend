@@ -30,16 +30,18 @@ export default function WeeklyTable() {
         fetchData();
     }, [])
     const fetchData = async () => {
-        Axios.get("/tasks/get", {
-            params: {
-                email: localStorage.getItem("email")
-            }
-        }).then((response) => {
-            var res = response;
-            // Sort Date data in order
-            res.data.sort((a, b) => new Date(b.date) - new Date(a.date))
-            setRows(response["data"]);
-        })
+        if (localStorage.getItem("isLoggedin") && localStorage.getItem("isLoggedin") === "true") {
+            Axios.get("https://dev-time-manager-api.onrender.com/tasks/get", {
+                params: {
+                    email: localStorage.getItem("email")
+                }
+            }).then((response) => {
+                var res = response;
+                // Sort Date data in order
+                res.data.sort((a, b) => new Date(b.date) - new Date(a.date))
+                setRows(response["data"]);
+            })
+        }
     }
 
     const handleEdit = (event, row) => {
@@ -50,7 +52,7 @@ export default function WeeklyTable() {
     }
     const handleDelete = (event, row) => {
         if (window.confirm("Do you want to delete the task \"" + row.task_name + "\"?")) {
-            Axios.delete("/tasks/delete", {
+            Axios.delete("https://dev-time-manager-api.onrender.com/tasks/delete", {
                 data: {
                     id: row.task_id,
                 }
@@ -70,7 +72,7 @@ export default function WeeklyTable() {
         }
         if (change[row.id] && change[row.id].isFinished !== rows[taskIndex]["is_finished"]) {
             if (window.confirm("Do you want to save the change?")) {
-                Axios.post('/tasks/update', {
+                Axios.post('https://dev-time-manager-api.onrender.com/tasks/update', {
                     taskId: row.id,
                     isFinished: change[row.id].isFinished,
                 }).then((response) => {
