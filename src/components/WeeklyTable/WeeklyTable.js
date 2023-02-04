@@ -31,7 +31,7 @@ export default function WeeklyTable() {
     }, [])
     const fetchData = async () => {
         if (localStorage.getItem("isLoggedin") && localStorage.getItem("isLoggedin") === "true") {
-            Axios.get("https://dev-time-manager-api.onrender.com/tasks/get", {
+            Axios.get('https://dev-time-manager-api.onrender.com/tasks/get', {
                 params: {
                     email: localStorage.getItem("email")
                 }
@@ -52,7 +52,7 @@ export default function WeeklyTable() {
     }
     const handleDelete = (event, row) => {
         if (window.confirm("Do you want to delete the task \"" + row.task_name + "\"?")) {
-            Axios.delete("https://dev-time-manager-api.onrender.com/tasks/delete", {
+            Axios.delete('https://dev-time-manager-api.onrender.com/tasks/delete', {
                 data: {
                     id: row.task_id,
                 }

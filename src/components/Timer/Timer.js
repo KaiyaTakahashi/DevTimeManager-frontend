@@ -44,7 +44,7 @@ function Timer() {
             }
             if (window.confirm("Do you want to save this task?")) {
                 /* Insert task into database */
-                Axios.post("https://dev-time-manager-api.onrender.com/tasks/insert", {
+                Axios.post('https://dev-time-manager-api.onrender.com/tasks/insert', {
                     taskName: data.task,
                     time: hours + ":" + minutes + ":" + seconds,
                     isFinished: data.isFinished,
@@ -55,7 +55,7 @@ function Timer() {
                     console.log(response);
                 })
                 /* Insert task into progress_tasks */
-                Axios.post("https://dev-time-manager-api.onrender.com/progress_tasks/insert", {
+                Axios.post('https://dev-time-manager-api.onrender.com/progress_tasks/insert', {
                     date: today,
                     value: hours + Math.round((minutes / 60) * 10) / 10,
                     email: localStorage.getItem("email"),

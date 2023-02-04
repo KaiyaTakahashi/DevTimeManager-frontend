@@ -32,7 +32,7 @@ export default function WeeklyColumn() {
 
   const fetchData = async () => {
     if (localStorage.getItem("isLoggedin") && localStorage.getItem("isLoggedin") === "true") {
-      Axios.get("https://dev-time-manager-api.onrender.com/progress_tasks/get", {
+      Axios.get('https://dev-time-manager-api.onrender.com/progress_tasks/get', {
         params: {
           email: localStorage.getItem("email")
       }
