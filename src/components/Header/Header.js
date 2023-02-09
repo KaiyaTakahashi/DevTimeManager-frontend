@@ -55,9 +55,9 @@ function Header() {
 
   var Login = () => {
     const onSuccess = (res) => {
-      console.log("Login successfully: ", res);
         Axios.post('https://dev-time-manager-api.onrender.com/users/insert', res).then((response) => {
             const decoded = jwt_decode(response.data.id_token);
+            console.log("this is decoded: ", decoded);
             setImageUrl(decoded.picture);
             setName(decoded.given_name);
             setLoginData("true");
