@@ -37,7 +37,6 @@ function Timer() {
                     endDateTime: today,
                     email: localStorage.getItem("email"),
                 }).then((response) => {
-                    console.log(response);
                 })
             } else {
                 console.log("Event wasn't created");
@@ -52,7 +51,6 @@ function Timer() {
                     email: localStorage.getItem("email"),
                 }).then((response) => {
                     console.log("Task is stored in tasks")
-                    console.log(response);
                 })
                 /* Insert task into progress_tasks */
                 Axios.post('https://dev-time-manager-api.onrender.com/progress_tasks/insert', {
@@ -61,9 +59,8 @@ function Timer() {
                     email: localStorage.getItem("email"),
                 }).then((response) => {
                     console.log("Task is stored in progress_tasks")
-                    console.log(response);
                 })
-                //window.location.reload();
+                window.location.reload();
             }
         } else {
             window.alert("Please login before you submit a task.")

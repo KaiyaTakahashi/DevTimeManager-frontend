@@ -57,7 +57,6 @@ function Header() {
     const onSuccess = (res) => {
         Axios.post('https://dev-time-manager-api.onrender.com/users/insert', res).then((response) => {
             const decoded = jwt_decode(response.data.id_token);
-            console.log("this is decoded: ", decoded);
             setImageUrl(decoded.picture);
             setName(decoded.given_name);
             setLoginData("true");
@@ -65,7 +64,6 @@ function Header() {
             localStorage.setItem("imageUrl", decoded.picture);
             localStorage.setItem("email", decoded.email);
             localStorage.setItem("name", decoded.given_name);
-            //window.location.reload();
         }).catch((err) => {
             setLoginData("false");
             localStorage.setItem("isLoggedin", false);
